@@ -1,0 +1,15 @@
+apiVersion: services.cloud.sap.com/v1
+kind: ServiceInstance
+metadata:
+  name: lm-pg-instance
+  namespace: ic-controlplane
+status:
+  ready: 'True'
+spec:
+  parameters:
+    allow_access: "18.153.198.11,18.157.193.41,3.121.240.87"
+    memory: 8
+    region: "eu-central-1"
+    storage: 5
+  serviceOfferingName: postgresql-db
+  servicePlanName: premium

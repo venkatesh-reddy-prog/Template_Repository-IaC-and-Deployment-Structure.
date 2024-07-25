@@ -7,8 +7,8 @@ metadata:
 spec:
   project: default
   sources:
-    - repoURL: https://github.tools.sap/BIC/bic-product-dev.git
-      path: charts/postgres
+    - repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
+      path: bic/landscape-manifests
       targetRevision: HEAD
   destination:
     server: SERVER_URL

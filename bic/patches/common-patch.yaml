@@ -4,7 +4,7 @@ metadata:
   name: ignored
 spec:
   destination:
-    server: 'https://api.iac-prov-cp.bic-lm.shoot.canary.k8s-hana.ondemand.com'
+    server: 'https://api.eu12-iac-prov.bic-dev.shoot.canary.k8s-hana.ondemand.com'
   syncPolicy:
     automated:
       selfHeal: true
