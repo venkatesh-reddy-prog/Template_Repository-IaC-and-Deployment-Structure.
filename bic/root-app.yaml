@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cf-eu12-it-iac-prov-root-app
+spec:
+  project: default
+  source:
+    repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
+    path: bic
+    targetRevision: HEAD
+    kustomize:
+      namePrefix: iac-prov-
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: sf-2e4ac807-c35b-4604-a175-53c4a37c0177
+  syncPolicy:
+    syncOptions:
+      - Replace=true
+      - PruneLast=true

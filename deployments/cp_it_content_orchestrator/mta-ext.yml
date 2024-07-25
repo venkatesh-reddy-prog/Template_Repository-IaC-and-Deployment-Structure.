@@ -1,0 +1,7 @@
+---
+mta_ext:
+  modules:
+    - name: it-co
+      parameters:
+        instances: 1
+        memory: 8G

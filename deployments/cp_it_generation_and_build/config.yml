@@ -1,0 +1,8 @@
+---
+config:
+  component:
+    group_id: ""
+    artifact_id: ""
+    extension: mtar
+    mta_id: ""
+    version: ""

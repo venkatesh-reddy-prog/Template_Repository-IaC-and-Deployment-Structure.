@@ -1,0 +1,21 @@
+---
+ mta_ext:
+  modules:
+    - name: it-design-service
+      parameters:
+        instances: 1
+        memory: 8GB
+  parameters:
+    lp_custom_host: isuite-it-iac-prov
+  resources:
+    - name: it-db-design-jobs
+      type: org.cloudfoundry.managed-service
+      parameters:
+        service: postgresql-db
+        service-plan: shared-postgresql
+        config:
+          dedicated_instance: it-db-common
+        skip-service-updates:
+          plan: True
+          parameters: True
+          tags: True

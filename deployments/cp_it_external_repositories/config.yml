@@ -1,0 +1,11 @@
+---
+config:
+  nexus:
+    protocol: https
+    host: common.repositories.cloud.sap
+    port: 443
+    path: /build.snapshots.cpi
+  artifactory:
+    protocol: https
+    host: build-cloud-integration.docker.repositories.sap.ondemand.com
+    port: 443

@@ -1,0 +1,8 @@
+---
+config:
+  component:
+    group_id: com.sap.it.app
+    artifact_id: it-app-assembly
+    extension: mtar
+    mta_id: it-app
+    version: ""

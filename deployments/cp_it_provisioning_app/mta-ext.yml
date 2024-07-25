@@ -1,0 +1,18 @@
+---
+mta_ext:
+  parameters:
+    cpis-custom-domain: isuite-it-iac-prov
+    cockpit-host: account.int.sap.eu2.hana.ondemand.com/cockpit
+  resources:
+    - name: ica-service-broker
+      optional: true
+    - name: apim-service-broker
+      optional: true
+    - name: SAPGRAPH-isuite-servicebroker
+      optional: true
+    - name: ica-service-broker-ups
+      active: true
+    - name: apim-service-broker-ups
+      active: true
+    - name: SAPGRAPH-isuite-servicebroker-ups
+      active: true  

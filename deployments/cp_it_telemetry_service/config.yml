@@ -1,0 +1,8 @@
+---
+config:
+  component:
+    group_id: com.sap.it.tlm
+    artifact_id: it-tlm-assembly
+    extension: mtar
+    mta_id: it-tlm-service
+    version: ""

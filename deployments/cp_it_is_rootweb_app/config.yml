@@ -1,0 +1,8 @@
+---
+config:
+  component:
+    group_id: com.sap.it.istudio.rootwebapp
+    artifact_id: it.istudio.rootwebapp.assembly
+    extension: mtar
+    mta_id: it-istudio-rootwebapp
+    version: ""

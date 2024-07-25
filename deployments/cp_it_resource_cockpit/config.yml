@@ -1,0 +1,18 @@
+---
+config:
+  component:
+    group_id: com.sap.it.rc
+    artifact_id: web-assembly
+    extension: mtar
+    mta_id: it-rc-web
+    version: ""
+  services:
+    postgresql_rc:
+      service: postgresql-db
+      service_plan: standard
+      name: it-db-rc
+      memory: "2"
+      storage: "200"
+      engine_version: "12"
+      multi_az: false
+      server_type: ""

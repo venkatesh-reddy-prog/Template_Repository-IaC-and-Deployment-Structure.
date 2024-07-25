@@ -1,0 +1,9 @@
+---
+config:
+  component:
+    version: ""
+  services:
+    redis:
+      name: it-cec-redis
+      service: redis-cache
+      service_plan: premium

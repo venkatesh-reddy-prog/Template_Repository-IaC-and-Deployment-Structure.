@@ -1,0 +1,6 @@
+landscape:
+  domain: eu12.hana.ondemand.com
+  label: iac-prov
+  name: iac-prov
+  operator: sap
+  type: aws

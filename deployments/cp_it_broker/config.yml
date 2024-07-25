@@ -1,0 +1,43 @@
+config:
+  apim_broker:
+    broker_url: null
+  catalog_plan_id: 26337ab49bcd69ebcd66edadc8cce37f
+  catalog_service_id: d96fe76a86735b9b5aecdf7d4c1f1037
+  clone_id: e3003c56343046bdce963a97097486fa
+  component:
+    artifact_id: it-broker-assembly
+    extension: mtar
+    group_id: com.sap.it.broker
+    mta_id: it-broker
+    version: ''
+  cpi_broker:
+    broker_url: https://it-iac-prov-broker.cert.cfapps.eu12.hana.ondemand.com
+  dsi_broker:
+    broker_url: ''
+  graph_broker:
+    broker_url: null
+  ia_broker:
+    broker_url: null
+  eventmesh_broker:
+      broker_url: ''
+  services:
+    apim_service:
+      name: apim-service-broker
+      service: apim-isuite-servicebroker
+      service_plan: default
+    cpi_service:
+      name: it-broker
+      service: cpi-isuite-servicebroker
+      service_plan: default
+    dsi_service:
+      name: DSI-isuite-servicebroker
+      service: DSI-isuite-servicebroker
+      service_plan: default
+    graph_service:
+      name: SAPGRAPH-isuite-servicebroker
+      service: SAPGRAPH-isuite-servicebroker
+      service_plan: default
+    ia_service:
+      name: ica-service-broker
+      service: ica-isuite-servicebroker
+      service_plan: default

@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ignored
+spec:
+  destination:
+    server: 'https://api.iac-prov-cp.bic-lm.shoot.canary.k8s-hana.ondemand.com'
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+    managedNamespaceMetadata:
+      labels:
+        istio-injection: enabled 

@@ -1,0 +1,45 @@
+config:
+  cf:
+    api_endpoint: https://api.cf.eu12.hana.ondemand.com
+    base_domain: ''
+    base_domain_shared: false
+    org: cpi_iac_prov_eu12_org
+    space: prov_eu12_iac_prov
+    ui_domain: ''
+  dynatrace:
+    dynatrace_env: INTAS
+    dynatrace_instance_name: intas-dynatrace-service
+    dynatrace_service: dynatrace
+    dynatrace_service_plan: environment
+  dynatrace_ups:
+    dyn_api: Ignore
+    dyn_env: Ignore
+  intas:
+    app:
+      db:
+        bulk_threshold: 1
+        logical_per_physical: 15
+        postgres_plan_standard: standard
+        postgres_provisioning_mode: SHARED
+        postgres_service: postgresql-db
+        unallocated_threshold: 2
+      direct_memory: 128M
+      ds:
+        connection_timeout: 5000
+        idle_timeout: 20000
+        leak_detection_timeout: 120000
+        max_lifetime: 600000
+        max_poolsize: 5
+        min_idle: 0
+      instance_count: 1
+      memory: 1G
+      mtls:
+        only: true
+    approuter:
+      instance_count: 1
+      memory: 1G
+  repository:
+    url: ''
+  test:
+    suffix: ''
+    use_dev_plans: false

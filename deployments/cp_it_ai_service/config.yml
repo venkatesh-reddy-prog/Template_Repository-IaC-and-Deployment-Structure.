@@ -1,0 +1,13 @@
+---
+config:
+  component:
+    group_id: com.sap.it.ai
+    artifact_id: it-ai-service
+    extension: mtar
+    mta_id: it-ai-service
+    version: ""
+  services:
+    aicore:
+      service: aicore
+      service_plan: sap-internal
+      name: aicore

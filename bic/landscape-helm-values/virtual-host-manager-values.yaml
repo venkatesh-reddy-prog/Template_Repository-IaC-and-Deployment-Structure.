@@ -1,0 +1,3 @@
+vault:
+  certs:
+    secretName: "vhcertificates"

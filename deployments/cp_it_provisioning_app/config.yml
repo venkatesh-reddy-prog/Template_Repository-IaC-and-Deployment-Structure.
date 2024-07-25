@@ -1,0 +1,62 @@
+config:
+  component:
+    artifact_id: cf-tenant-prov.assembly
+    extension: mtar
+    group_id: com.sap.it.cf
+    mta_id: cpi-onboard-tenant
+    version: ''
+  external_system: false
+  ocn:
+    destination_service_name: ocn-destination-service
+    org: ''
+    space: ''
+  services:
+    auditlog:
+      name: it-audit-app-prov
+      service: auditlog
+      service_plan: oauth2
+    credstore:
+      name: it-app-prov-secure-store
+      service: credstore
+      service_plan: large
+    elmo:
+      name: elmo-service
+      service: edge-lifecycle-management-orchestrator
+      service_plan: default
+    html_runtime:
+      name: html-runtime
+      service: html5-apps-repo
+      service_plan: app-runtime
+    isuite_saas_registry:
+      app_name: it-iac-prov
+      display_name: Integration Suite-iac-prov
+      name: it-prov-saas-registry
+      service: saas-registry
+      service_plan: application
+    reuse_saas_registry:
+      name: it-app-prov-reuse
+      service: saas-registry
+      service_plan: service
+    saas_registry:
+      app_name: it-iac
+      display_name: Process Integration-iac-prov
+      name: it-saas-registry
+      product_plan: dev
+      service: saas-registry
+      service_plan: application
+    xsuaa_app_router:
+      name: it-prov-uaa
+      service: xsuaa
+      service_plan: application
+    xsuaa_auto_pilot:
+      isdc_service_key: it-prov-monitoring-key
+      name: it-prov-cert-uaa
+      service: xsuaa
+      service_key: prov-cert-key
+      service_plan: application
+    xsuaa_prov_app:
+      name: it-prov-api-uaa
+      service: xsuaa
+      service_plan: application
+  spc_integration_enabled: true
+  ucl_gateway_host: compass-gateway-sap-mtls.mps.stage.kyma.cloud.sap

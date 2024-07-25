@@ -1,0 +1,14 @@
+kind: Application
+metadata:
+  name: ic-virtual-host-manager
+spec:
+  sources:
+    - repoURL: 'https://github.tools.sap/BIC/bic-product-dev.git'
+      path: charts/helm-ic-virtual-host-manager
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - $landscape-values/bic/landscape-helm-values/virtual-host-manager-values.yaml
+    - repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
+      targetRevision: HEAD
+      ref: landscape-values 

@@ -1,0 +1,7 @@
+---
+config:
+  component:
+    group_id: com.sap.it.node
+    artifact_id: ""
+    classifier: assembly
+    version: ""

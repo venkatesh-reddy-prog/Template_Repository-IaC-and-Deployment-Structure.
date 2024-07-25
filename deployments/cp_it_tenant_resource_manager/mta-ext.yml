@@ -1,0 +1,10 @@
+---
+mta_ext:
+  parameters:
+    CPIS_CUSTOM_DOMAIN : isuite-it-iac-prov
+  modules:
+    - name: it-trm
+      properties:
+        CPIS_CUSTOM_DOMAIN: isuite-it-iac-prov
+        INTEGRATION_STUDIO_ENABLED: true
+        PROVIDER_TENANT_ID: cbf9680a-e526-4053-b8b3-3125630ada11

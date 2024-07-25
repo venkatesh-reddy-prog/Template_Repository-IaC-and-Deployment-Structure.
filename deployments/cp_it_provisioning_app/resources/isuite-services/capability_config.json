@@ -1,0 +1,114 @@
+[
+  {
+    "capabilityName": "APIMGT",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "",
+    "appName": "",
+    "responseUrlPattern": ""
+  },
+  {
+    "capabilityName": "APIMGT_DEV_PORTAL",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "",
+    "appName": "",
+    "responseUrlPattern": ""
+  },
+  {
+    "capabilityName": "CPI",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "it!b17080",
+    "appName": "it-iac-prov-app-prov-reuse",
+    "responseUrlPattern": "<subscribedSubdomain>.it-iac-prov.internal.cfapps.eu12.hana.ondemand.com/itspaces"
+  },
+  {
+    "capabilityName": "ICA",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "",
+    "appName": "",
+    "responseUrlPattern": ""
+  },
+  {
+    "capabilityName": "OCN",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "",
+    "appName": "",
+    "responseUrlPattern": ""
+  },
+  {
+    "capabilityName": "INTAS",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "intas-uaaacfun002!b20496",
+    "appName": "intasacfun002",
+    "responseUrlPattern": "<subscribedSubdomain>.intas-acfun002.cfapps.eu12.hana.ondemand.com"
+  },
+  {
+    "capabilityName": "TPM",
+    "provisioningMode": [
+      "TRM"
+    ],
+    "appId": "it!b17080",
+    "appName": "it-iac-prov-app-prov-reuse",    
+    "onBoardingApiPattern": "it-iac-prov-trm.internal.cfapps.eu12.hana.ondemand.com/api/trm/v1/tenants/<subscribedSubdomain>/subscriptions",
+    "queryApiPattern": "it-iac-prov-trm.internal.cfapps.eu12.hana.ondemand.com/api/trm/v1/tenants/<subscribedSubdomain>/subscriptions/tpm",
+    "offBoardingApiPattern": "it-iac-prov-trm.internal.cfapps.eu12.hana.ondemand.com/api/trm/v1/tenants/<subscribedSubdomain>/subscriptions/tpm",
+    "responseUrlPattern": "<subscribedSubdomain>.it-iac-prov.internal.cfapps.eu12.hana.ondemand.com/itspaces/shell/tpm"
+  },
+  {
+    "capabilityName": "NEURONEDGE",
+    "provisioningMode": [
+      "CIS",
+      "TRM"
+     ],
+     "appId": "",
+     "appName": "",
+     "onBoardingApiPattern": "",
+     "queryApiPattern": "",
+     "offBoardingApiPattern": "",
+     "responseUrlPattern": ""
+   },
+   {
+    "capabilityName": "PIMAS",
+    "provisioningMode": [
+      "CIS"
+    ],
+    "appId": "pimas-uaaacfun002!b19822",
+    "appName": "pimasacfun002",
+    "responseUrlPattern": "<subscribedSubdomain>.pimas-acfun002.cfapps.eu12.hana.ondemand.com"
+   },
+   {
+     "capabilityName": "GRAPH",
+     "provisioningMode": [
+       "TRM",
+       "CIS"
+     ],
+     "appId": "",
+     "appName": "",
+     "onBoardingApiPattern": "",
+     "queryApiPattern":"",
+     "offBoardingApiPattern":"",
+     "responseUrlPattern": "",
+     "isBeta":false
+   },
+   {
+     "capabilityName": "DSI",
+     "provisioningMode": [
+       "CIS"
+     ],
+     "appId": "",
+     "appName": "",
+     "responseUrlPattern": "",
+     "isBeta": true
+   }
+]

@@ -1,0 +1,8 @@
+---
+config:
+  component:
+    group_id: com.sap.it.km
+    artifact_id: it-km-assembly
+    extension: mtar
+    mta_id: it-km-rest
+    version: ""

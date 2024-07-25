@@ -1,0 +1,21 @@
+config:
+  component:
+    artifact_id: trm.assembly
+    extension: mtar
+    group_id: com.sap.it.trm
+    mta_id: it-trm
+    version: ''
+  db_service_plan: v9.6-large
+  edge_lm:
+    subaccount_id: elmo-subaccount-id
+    xsappname: elmo-hook
+  jms_scope: live
+  jms_service: enterprise-messaging
+  services:
+    xsuaa_elmo_hook:
+      name: it-uaa-elmo-hook
+      service: xsuaa
+      service_plan: application
+  worker_disk_size_in_mb: 4096
+  worker_instance_count: 1
+  worker_memory_size_in_mb: 4096

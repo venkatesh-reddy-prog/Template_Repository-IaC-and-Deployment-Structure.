@@ -1,0 +1,245 @@
+config:
+  ccn_domain: https://cloudintegration.ap1.hana.ondemand.com
+  ccn_domain_mtls: https://cloudintegration.cert.ap1.hana.ondemand.com
+  cf:
+    api_uri: https://api.cf.eu12.hana.ondemand.com
+    global_account_id: a56d7178-a908-430a-9b19-82ccc172035a
+    kafka_org: cpi_iac_prov_eu12_org
+    kafka_space: shared_eu12_iac_prov
+    org: cpi_iac_prov_eu12_org
+    provider_account_id: 22e30c85-ac1f-49f2-ac4c-d25ddf6b7141
+    singleton_api_uri: https://api.cf.eu12.hana.ondemand.com
+    singleton_org: cpi_acdev003_eu12_org
+    singleton_space: prov_eu12_acdev003
+    singleton_update: false
+    skip_ssl_validation: true
+    space: prov_eu12_iac_prov
+  cpi_domain: internal.cfapps.eu12.hana.ondemand.com
+  data_center: eu12
+  digicert:
+    url: https://www.digicert.com/services/v2/order/certificate/ssl_securesite_pro
+  dynatrace:
+    apiurl: https://apm.cf.eu12.hana.ondemand.com/e/0cb88e8a-5d91-4982-afb5-1494f1fe6f44/api
+    enable_reporting: true
+    environmentid: 0cb88e8a-5d91-4982-afb5-1494f1fe6f44
+    ups_name: it-dynatrace
+  external_system: false
+  isuite_domain: isuite-it-iac-prov
+  it_domain_prefix_app: it-iac-prov
+  it_system_id: it-iac-prov
+  services:
+    audit:
+      name: it-audit
+      service: auditlog
+      service_plan: standard
+    audit_admin_cockpit:
+      name: it-audit-admin-cockpit
+      service: auditlog
+      service_plan: oauth2
+    audit_app:
+      name: it-audit-app
+      service: auditlog
+      service_plan: oauth2
+    audit_app_prov:
+      name: it-audit-app-prov
+      service: auditlog
+      service_plan: oauth2
+    audit_broker:
+      name: it-audit-broker-cpi
+      service: auditlog
+      service_plan: oauth2
+    audit_cloud_event_controller:
+      name: it-audit-cloud-event-controller
+      service: auditlog
+      service_plan: oauth2
+    audit_co:
+      name: it-audit-co
+      service: auditlog
+      service_plan: oauth2
+    audit_design_service:
+      name: it-audit-design-service
+      service: auditlog
+      service_plan: oauth2
+    audit_is_rootwebapp:
+      name: it-audit-is-rootwebapp
+      service: auditlog
+      service_plan: oauth2
+    audit_km_rest:
+      name: it-audit-km-rest
+      service: auditlog
+      service_plan: oauth2
+    audit_op:
+      name: it-audit-op
+      service: auditlog
+      service_plan: oauth2
+    audit_rc_web:
+      name: it-audit-rc-web
+      service: auditlog
+      service_plan: oauth2
+    audit_runtime_api:
+      name: it-audit-runtime-api
+      service: auditlog
+      service_plan: oauth2
+    audit_tlm_service:
+      name: it-audit-tlm-service
+      service: auditlog
+      service_plan: oauth2
+    audit_tpm:
+      name: it-audit-tpm
+      service: auditlog
+      service_plan: oauth2
+    audit_transformation_service:
+      name: it-audit-transformation-service
+      service: auditlog
+      service_plan: oauth2
+    audit_trm:
+      name: it-audit-trm
+      service: auditlog
+      service_plan: oauth2
+    audit_trm_broker:
+      name: it-audit-trm-broker
+      service: auditlog
+      service_plan: oauth2
+    cloud_logging:
+      name: it-log-cloud
+      service: cloud-logging
+      service_plan: standard
+    cloud_logging_ws:
+      name: it-logs-cloud-ws
+    connectivity:
+      name: it-connectivity
+      service: connectivity
+      service_plan: lite
+    credstore:
+      name: it-securestore
+      service: credstore
+      service_plan: large
+    csrf_key_ups:
+      name: it-csrf-key
+    customdomain:
+      name: it-customdomains
+      service: INFRA
+      service_plan: custom_domains
+    destination:
+      name: it-destination
+      service: destination
+      service_plan: lite
+    dynatrace_service:
+      env_name: CPIEU12IACPROV
+      name: it-dynatrace-service
+      service: dynatrace
+      service_plan: environment
+    fs_storage:
+      name: it-fs-trm
+      service: fs-storage
+      service_plan: lite
+    heap_dump_storage:
+      name: heap-dump
+      service: fs-storage
+      service_plan: lite
+      size: '30'
+    is_metering:
+      name: is-metering
+      service: metering-service
+      service_plan: default
+    is_metering_cpi:
+      name: is-metering-cpi
+      service: metering-service
+      service_plan: default
+    isuite_saas_registry:
+      app_name: it-iac-prov
+      display_name: Integration Suite-iac-prov
+      name: it-prov-saas-registry
+      service: saas-registry
+      service_plan: application
+    jobscheduler:
+      name: it-jobs
+      service: jobscheduler
+      service_plan: standard
+    kafka:
+      name: it-kafka-master
+      service: kafka
+      service_plan: standard
+      shared: false
+    kafka_broker_rt:
+      name: it-kafka-broker-rt
+      service: kafka
+      service_plan: reference
+      shared: false
+    malware_scanner:
+      name: it-malware-scanner
+      service: malware-scanner
+      service_plan: clamav
+    metering:
+      name: it-metering
+      service: metering-service
+      service_plan: default
+    object_store:
+      name: it-store-managed
+      service: managed-objectstore
+      service_plan: s3-standard
+    postgresql_co:
+      engine_version: '12'
+      memory: '16'
+      multi_az: false
+      name: it-db-co
+      server_type: ''
+      service: postgresql-db
+      service_plan: premium
+      storage: '100'
+    postgresql_common:
+      engine_version: '12'
+      memory: '4'
+      multi_az: false
+      name: it-db-common
+      server_type: ''
+      service: postgresql-db
+      service_plan: standard
+      storage: '10'
+    postgresql_prov:
+      engine_version: '12'
+      memory: '4'
+      multi_az: false
+      name: it-db-prov
+      server_type: ''
+      service: postgresql-db
+      service_plan: standard
+      storage: '20'
+    postgresql_trm:
+      engine_version: '12'
+      memory: '16'
+      multi_az: false
+      name: it-db-trm
+      server_type: ''
+      service: postgresql-db
+      service_plan: premium
+      storage: '40'
+    rate_limiter:
+      name: it-rate-limiter
+    runtime_node_logging:
+      name: it-logs
+      service: application-logs
+      service_plan: large
+    saas_registry:
+      app_name: it-iac
+      display_name: Process Integration-iac-prov
+      name: it-saas-registry
+      product_plan: dev
+      service: saas-registry
+      service_plan: application
+    service_logging:
+      name: it-logs-services
+      service: application-logs
+      service_plan: large
+    service_manager_store:
+      name: it-sm-store-managed
+      service: service-manager
+      service_plan: container
+    xsuaa-it:
+      name: it-uaa
+      service: xsuaa
+      service_plan: broker
+  system_type: internal
+  telemetry_service:
+    enable_discovery: false
+  ui5_custom_domain: ''

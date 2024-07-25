@@ -1,0 +1,2509 @@
+jobs:
+- build_logs_to_retain: 1000
+  name: cp_it_app_router
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_landscape_credstore
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_app_router
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_app_router
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_broker
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_broker
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_broker
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_broker_runtime
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_broker_runtime
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_broker_runtime
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_cloud_event_controller
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_cloud_event_controller
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_cloud_event_controller
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_content_orchestrator
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_content_orchestrator
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_content_orchestrator
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_design
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_is_rootweb_app
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_design
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_design
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_destination_routes
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_destination_routes
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_destination_routes
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_external_repositories
+  plan:
+  - get: landscape
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_external_repositories
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_external_repositories
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_generation_and_build
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_generation_and_build
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_generation_and_build
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_intas_service
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_external_repositories
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_intas_service
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_intas_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_is_rootweb_app
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_broker
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_is_rootweb_app
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_is_rootweb_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_key_management
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_key_management
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_key_management
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_landscape_credstore
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_landscape_credstore
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_landscape_credstore
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_operations
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_is_rootweb_app
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_operations
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_operations
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_product_version
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_app_router
+    - validate-cp_it_broker
+    - validate-cp_it_broker_runtime
+    - validate-cp_it_cloud_event_controller
+    - validate-cp_it_content_orchestrator
+    - validate-cp_it_design
+    - validate-cp_it_generation_and_build
+    - validate-cp_it_is_rootweb_app
+    - validate-cp_it_key_management
+    - validate-cp_it_operations
+    - validate-cp_it_provisioning_app
+    - validate-cp_it_rootweb_app
+    - validate-cp_it_runtime_api
+    - validate-cp_it_space_setup
+    - validate-cp_it_telemetry_service
+    - validate-cp_it_tenant_resource_manager
+    - validate-cp_it_tpm_service
+    - validate-cp_it_transformation_service
+    - validate-cp_it_resource_cockpit
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_product_version
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_product_version
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_provisioning_app
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_is_rootweb_app
+    - validate-cp_it_landscape_credstore
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_provisioning_app
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_provisioning_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_rootweb_app
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_rootweb_app
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_rootweb_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_runtime_api
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_runtime_api
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_runtime_api
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_runtime_node
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_external_repositories
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_runtime_node
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_runtime_node
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_space_setup
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_external_repositories
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_space_setup
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_space_setup
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_telemetry_service
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_telemetry_service
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_telemetry_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_tenant_resource_manager
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_tenant_resource_manager
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_tenant_resource_manager
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_tpm_service
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_tpm_service
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_tpm_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_app_router
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_app_router
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_app_router
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_app_router
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_broker
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_broker
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_broker
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_broker
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_broker_runtime
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_broker_runtime
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_broker_runtime
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_broker_runtime
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_cloud_event_controller
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_cloud_event_controller
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_cloud_event_controller
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_cloud_event_controller
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_content_orchestrator
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_content_orchestrator
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_content_orchestrator
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_content_orchestrator
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_design
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_design
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_design
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_design
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_destination_routes
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_destination_routes
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_destination_routes
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_destination_routes
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_external_repositories
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_external_repositories
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_external_repositories
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_external_repositories
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_generation_and_build
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_generation_and_build
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_generation_and_build
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_generation_and_build
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_intas_service
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_intas_service
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_intas_service
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_intas_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_is_rootweb_app
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_is_rootweb_app
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_is_rootweb_app
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_is_rootweb_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_key_management
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_key_management
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_key_management
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_key_management
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_landscape_credstore
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_landscape_credstore
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_landscape_credstore
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_landscape_credstore
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_operations
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_operations
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_operations
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_operations
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_product_version
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_product_version
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_product_version
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_product_version
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_provisioning_app
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_provisioning_app
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_provisioning_app
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_provisioning_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_rootweb_app
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_rootweb_app
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_rootweb_app
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_rootweb_app
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_runtime_api
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_runtime_api
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_runtime_api
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_runtime_api
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_runtime_node
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_runtime_node
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_runtime_node
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_runtime_node
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_space_setup
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_space_setup
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_space_setup
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_telemetry_service
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_telemetry_service
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_telemetry_service
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_telemetry_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_tenant_resource_manager
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_tenant_resource_manager
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_tenant_resource_manager
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_tenant_resource_manager
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_tpm_service
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_tpm_service
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_tpm_service
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_tpm_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_resource_cockpit
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_resource_cockpit
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_resource_cockpit
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_transformation_service
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_transformation_service
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_transformation_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: cp_it_trm_broker
+  plan:
+  - get: landscape
+    passed:
+    - validate-cp_it_space_setup
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_trm_broker
+        IAC_ACTION: lifecycle deploy
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: deploy-cp_it_trm_broker
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_resource_cockpit
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_resource_cockpit
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_resource_cockpit
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_resource_cockpit
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_transformation_service
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_transformation_service
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_transformation_service
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_transformation_service
+    timeout: 120m
+  serial: true
+- build_logs_to_retain: 1000
+  name: validate-cp_it_trm_broker
+  plan:
+  - get: landscape
+    passed:
+    - cp_it_trm_broker
+    trigger: true
+  - attempts: 3
+    config:
+      image_resource:
+        name: ""
+        source:
+          password: ((vault:iacboxpassword))
+          repository: iacbox.common.cdn.repositories.cloud.sap/iacbox2
+          tag: ((vault:iacboxversion_cicd))
+          username: ((vault:iacboxusername))
+        type: registry-image
+      inputs:
+      - name: landscape
+      params:
+        CF_DIAL_TIMEOUT: "20"
+        CONCOURSE_DEPLOYMENT_NAME: concourse
+        DEPLOYMENT_NAME: cp_it_trm_broker
+        IAC_ACTION: lifecycle test
+        IAC_LANDSCAPE_GIT_BRANCH: master
+        IAC_LANDSCAPE_GIT_PASSWORD: ((vault:credentials.landscape_git_password))
+        IAC_LANDSCAPE_GIT_PKEY: ""
+        IAC_LANDSCAPE_GIT_REPOSITORY: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+        IAC_LANDSCAPE_GIT_REPOSITORY_HOST: github.tools.sap
+        IAC_LANDSCAPE_GIT_USER_EMAIL: ((vault:credentials.landscape_git_email))
+        IAC_LANDSCAPE_GIT_USER_NAME: ((vault:credentials.landscape_git_user))
+        INFLUXDB_DATABASE: centralconcourse
+        INFLUXDB_PASSWORD: ((vault:credentials.influxdb_password))
+        INFLUXDB_URL: https://fluxcapacitor.hanavlab.ondemand.com
+        INFLUXDB_USER: ((vault:credentials.influxdb_user))
+        LANDSCAPE_CONCOURSE_URL: https://concourse.cf.eu12.hana.ondemand.com
+        LANDSCAPE_MASTER_PASSWORD: ((vault:lmp))
+        PIPELINE_NAME: cf-eu12-it-iac-prov_update_cpi
+        PRODUCT_NAME: product-cf-cpi
+        TEAM_NAME: cpi
+      platform: linux
+      run:
+        path: execute-iac-command.sh
+    task: test-cp_it_trm_broker
+    timeout: 120m
+  serial: true
+resources:
+- check_every: 5m0s
+  name: landscape
+  source:
+    branch: master
+    password: ((vault:credentials.landscape_git_password))
+    paths:
+    - config/*
+    - config/**/*
+    - products/product-cf-cpi
+    - products/product-cf-cpi/*
+    - products/product-cf-cpi/**/*
+    - deployments/cp_it_app_router/*
+    - deployments/cp_it_app_router/**/*
+    - deployments/cp_it_broker/*
+    - deployments/cp_it_broker/**/*
+    - deployments/cp_it_broker_runtime/*
+    - deployments/cp_it_broker_runtime/**/*
+    - deployments/cp_it_cloud_event_controller/*
+    - deployments/cp_it_cloud_event_controller/**/*
+    - deployments/cp_it_content_orchestrator/*
+    - deployments/cp_it_content_orchestrator/**/*
+    - deployments/cp_it_design/*
+    - deployments/cp_it_design/**/*
+    - deployments/cp_it_destination_routes/*
+    - deployments/cp_it_destination_routes/**/*
+    - deployments/cp_it_external_repositories/*
+    - deployments/cp_it_external_repositories/**/*
+    - deployments/cp_it_generation_and_build/*
+    - deployments/cp_it_generation_and_build/**/*
+    - deployments/cp_it_intas_service/*
+    - deployments/cp_it_intas_service/**/*
+    - deployments/cp_it_is_rootweb_app/*
+    - deployments/cp_it_is_rootweb_app/**/*
+    - deployments/cp_it_key_management/*
+    - deployments/cp_it_key_management/**/*
+    - deployments/cp_it_landscape_credstore/*
+    - deployments/cp_it_landscape_credstore/**/*
+    - deployments/cp_it_operations/*
+    - deployments/cp_it_operations/**/*
+    - deployments/cp_it_pimas_service/*
+    - deployments/cp_it_pimas_service/**/*
+    - deployments/cp_it_product_version/*
+    - deployments/cp_it_product_version/**/*
+    - deployments/cp_it_provisioning_app/*
+    - deployments/cp_it_provisioning_app/**/*
+    - deployments/cp_it_resource_cockpit/*
+    - deployments/cp_it_resource_cockpit/**/*
+    - deployments/cp_it_rootweb_app/*
+    - deployments/cp_it_rootweb_app/**/*
+    - deployments/cp_it_runtime_api/*
+    - deployments/cp_it_runtime_api/**/*
+    - deployments/cp_it_runtime_node/*
+    - deployments/cp_it_runtime_node/**/*
+    - deployments/cp_it_space_setup/*
+    - deployments/cp_it_space_setup/**/*
+    - deployments/cp_it_telemetry_service/*
+    - deployments/cp_it_telemetry_service/**/*
+    - deployments/cp_it_tenant_resource_manager/*
+    - deployments/cp_it_tenant_resource_manager/**/*
+    - deployments/cp_it_tpm_service/*
+    - deployments/cp_it_tpm_service/**/*
+    - deployments/cp_it_transformation_service/*
+    - deployments/cp_it_transformation_service/**/*
+    - deployments/cp_it_trm_broker/*
+    - deployments/cp_it_trm_broker/**/*
+    - deployments/env_setup/*
+    - deployments/env_setup/**/*
+    - deployments/ianode/*
+    - deployments/ianode/**/*
+    - deployments/icaclientnode/*
+    - deployments/icaclientnode/**/*
+    - deployments/icacontent/*
+    - deployments/icacontent/**/*
+    - deployments/icaworkspacenode/*
+    - deployments/icaworkspacenode/**/*
+    skip_ssl_verification: true
+    uri: https://github.tools.sap/INTAAS/cf-eu12-it-iac-prov.git
+    username: ((vault:credentials.landscape_git_user))
+  type: git
+var_sources:
+- config:
+    client_token: ((vault_token))
+    lookup_templates:
+    - /{{.Team}}/concourse/{{.Pipeline}}/{{.Secret}}
+    - /{{.Team}}/concourse/{{.Secret}}
+    - /common/{{.Secret}}
+    namespace: scp/centralconcourse
+    path_prefix: central-concourse-prod
+    server_name: vault.tools.sap
+    url: https://vault.tools.sap
+  name: vault
+  type: vault
