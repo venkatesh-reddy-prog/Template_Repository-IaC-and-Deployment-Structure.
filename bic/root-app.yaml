@@ -14,6 +14,10 @@ spec:
     server: 'https://kubernetes.default.svc'
     namespace: sf-2e4ac807-c35b-4604-a175-53c4a37c0177
   syncPolicy:
+    automated:
+      selfHeal: true
+      prune: true
     syncOptions:
-      - Replace=true
       - PruneLast=true
+      - CreateNamespace=true
+      - Replace=true
