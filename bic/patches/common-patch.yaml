@@ -8,8 +8,11 @@ spec:
   syncPolicy:
     automated:
       selfHeal: true
+      prune: true
     syncOptions:
+      - PruneLast=true
       - CreateNamespace=true
+      - Replace=true
     managedNamespaceMetadata:
       labels:
         istio-injection: enabled 
