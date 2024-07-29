@@ -35,3 +35,6 @@ clm:
       - name: rt-worker
         machineType: m5.xlarge
         gardenLinuxVersion: 1443.9.0
+
+postgres:
+  parentInstanceName: "lm-pg-instance-eu12"

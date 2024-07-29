@@ -1,7 +1,7 @@
 apiVersion: services.cloud.sap.com/v1
 kind: ServiceInstance
 metadata:
-  name: lm-pg-instance
+  name: lm-pg-instance-eu12
   namespace: ic-controlplane
 status:
   ready: 'True'
