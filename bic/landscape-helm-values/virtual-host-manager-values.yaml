@@ -1,3 +1,6 @@
 vault:
   certs:
     secretName: "vhcertificates"
+
+externalSecret:
+  enabled: true
