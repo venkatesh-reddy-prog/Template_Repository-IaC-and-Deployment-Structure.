@@ -1,3 +1,10 @@
-rtsecret: defg
+runtimeClusterBomOverrideLandcape:
+  istio-ingressgateway: 
+    defaults:
+      env:
+        foo: bar  
 
-tenantsecret: abcd
+tenantBomOverrideLandscape: 
+  policyengine:
+    policyengine:
+      haMode: true
