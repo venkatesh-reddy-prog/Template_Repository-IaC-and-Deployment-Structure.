@@ -1,0 +1,18 @@
+clusterName: eu12-iac-prov-controlplane
+
+activeGateGroup: default
+
+apiUrl: https://canary.eu12.apm.services.cloud.sap/e/0cb88e8a-5d91-4982-afb5-1494f1fe6f44/api
+
+namespace: dynatrace
+
+enableIstio: true
+
+activeGate:
+  resources:
+    requests:
+      cpu: 500m
+      memory: 512Mi
+    limits:
+      cpu: 1000m
+      memory: 1.5Gi

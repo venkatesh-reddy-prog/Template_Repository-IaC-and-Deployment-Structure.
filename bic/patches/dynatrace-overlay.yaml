@@ -1,8 +1,14 @@
 kind: Application
 metadata:
-  name: dynatrace-operator-app
-spec:   
-  syncPolicy:
-    managedNamespaceMetadata:
-      labels:
-        istio-injection: disabled
+  name: dynatrace-app
+spec: 
+  sources:
+    - repoURL: 'https://github.tools.sap/BIC/bic-product-dev.git'
+      path: charts/dynatrace
+      targetRevision: HEAD
+      helm:
+        valueFiles:
+          - $landscape-values/bic/landscape-helm-values/dynatrace-values.yaml
+    - repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
+      targetRevision: HEAD
+      ref: landscape-values

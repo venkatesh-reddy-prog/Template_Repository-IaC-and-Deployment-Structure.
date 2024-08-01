@@ -10,8 +10,8 @@ resources:
   - bic-product-dev/applications/bom-secrets.yaml
   - bic-product-dev/applications/cert-manager.yaml
   # - bic-product-dev/applications/fluentbit-app.yaml
-  # - bic-product-dev/applications/dynatrace-operator-app.yaml
-  # - bic-product-dev/applications/dynatrace-app.yaml
+  - bic-product-dev/applications/dynatrace-operator-app.yaml
+  - bic-product-dev/applications/dynatrace-app.yaml
   - bic-product-dev/applications/btp-operator-app.yaml
   - bic-product-dev/applications/ic-lifecycle-manager.yaml
   - bic-product-dev/applications/external-secrets-app.yaml
@@ -28,11 +28,11 @@ patches:
   - path: patches/ic-virtual-host-manager-overlay.yaml
     target:
       kind: Application
-      name: ic-virtual-host-manager
+      name: ic-virtual-host-manager        
+  - path: patches/dynatrace-overlay.yaml
+    target:
+      kind: Application 
+      name: dynatrace-app 
   - path: patches/common-patch.yaml
     target:
-      kind: Application         
-  # - path: patches/dynatrace-overlay.yaml
-  #   target:
-  #     kind: Application 
-  #     name: dynatrace-operator-app 
+      kind: Application 
