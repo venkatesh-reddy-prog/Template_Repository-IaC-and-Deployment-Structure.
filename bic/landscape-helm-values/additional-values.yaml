@@ -8,3 +8,5 @@ tenantBomOverrideLandscape:
   policyengine:
     policyengine:
       haMode: true
+      image:
+        imageNamespace: 'com.sap.it.img.dev'
