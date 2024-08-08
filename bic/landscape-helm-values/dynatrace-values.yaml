@@ -1,4 +1,4 @@
-clusterName: eu12-iac-prov-controlplane
+clusterName: eu12-iac-prov-control-plane
 
 activeGateGroup: default
 
