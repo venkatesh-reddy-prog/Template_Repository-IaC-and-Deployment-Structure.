@@ -10,3 +10,4 @@ tenantBomOverrideLandscape:
       haMode: true
       image:
         imageNamespace: 'com.sap.it.img.dev'
+    logLevel: DEBUG
