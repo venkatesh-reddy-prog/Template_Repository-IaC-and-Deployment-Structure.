@@ -23,3 +23,7 @@ clm:
 
 postgres:
   parentInstanceName: "lm-pg-instance-eu12"
+  
+vault:
+  certs:
+    secretName: "vhcertificates"
