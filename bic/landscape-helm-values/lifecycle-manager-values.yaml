@@ -27,3 +27,6 @@ postgres:
 vault:
   certs:
     secretName: "vhcertificates"
+  secretStoreRef:
+    name: "vault-backend"
+    
