@@ -1,2 +1,3 @@
 # name: dev-rel-landscape
 name: ingressgateway
+logLevel: debug
