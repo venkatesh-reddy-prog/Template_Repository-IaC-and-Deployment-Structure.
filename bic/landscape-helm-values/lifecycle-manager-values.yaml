@@ -29,4 +29,9 @@ vault:
     secretName: "vhcertificates"
   secretStoreRef:
     name: "vault-backend"
-    
+
+image:
+  pullPolicy: "Always"
+  imageNamespace: "com.sap.it.img.dev"
+  imageName: "ic-lifecycle-manager"
+  tag: "iac.latest"
