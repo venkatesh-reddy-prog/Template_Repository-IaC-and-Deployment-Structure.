@@ -15,9 +15,9 @@ pipeline {
         stage('Update YAML Files') {
             steps {
                 script {
-                    // Update YAML files using PowerShell
+                    // Corrected PowerShell command
                     bat '''
-                    PowerShell -Command "& {
+                    PowerShell -NoProfile -Command "& {
                         Get-ChildItem -Recurse -Filter *.yaml | ForEach-Object {
                             (Get-Content $_.FullName) -replace '\\{\\{ .Values.repoURL1 \\}\\}', '%REPO_URL%' | Set-Content $_.FullName
                         }
