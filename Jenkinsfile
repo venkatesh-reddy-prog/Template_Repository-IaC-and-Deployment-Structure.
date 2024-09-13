@@ -2,14 +2,12 @@ pipeline {
     agent any
 
     environment {
-        // Define environment variables
         REPO_URL = 'https://new-repo-url.com/repository.git'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the repository
                 checkout scm
             }
         }
