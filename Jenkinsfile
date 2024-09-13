@@ -15,13 +15,12 @@ pipeline {
         stage('Update YAML Files') {
             steps {
                 script {
-                    // Corrected PowerShell command
-                    bat '''
-                    PowerShell -NoProfile -Command "& {
-                        Get-ChildItem -Recurse -Filter *.yaml | ForEach-Object {
-                            (Get-Content $_.FullName) -replace '\\{\\{ .Values.repoURL1 \\}\\}', '%REPO_URL%' | Set-Content $_.FullName
-                        }
-                    }"
+                    // Use a script block to properly handle PowerShell commands
+                    powershell '''
+                    # Ensure to use correct PowerShell syntax
+                    Get-ChildItem -Recurse -Filter *.yaml | ForEach-Object {
+                        (Get-Content $_.FullName) -replace '\\{\\{ .Values.repoURL1 \\}\\}', $env:REPO_URL | Set-Content $_.FullName
+                    }
                     '''
                 }
             }
