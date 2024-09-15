@@ -30,4 +30,4 @@ pipeline {
 
                     // Loop through each YAML file and replace the repoURL values
                     yamlFiles.each { filePath ->
-                        def fileContent = readFile(filePath
+                        def fileContent = readFile(filePath)
