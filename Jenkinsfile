@@ -2,45 +2,57 @@ pipeline {
     agent any
 
     environment {
-        REPO_URL = 'https://new-repo-url.com/repository.git'
+        GITHUB_CREDENTIALS_ID = 'your-github-credentials-id' // Jenkins credentials ID for GitHub
+        GITHUB_REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo' // GitHub repository URL
+        GIT_BRANCH = 'main' // Branch where the files are located
+        NEW_REPO_URL1 = 'https://new.repoURL1.com' // New repoURL1 value
+        NEW_REPO_URL2 = 'https://new.repoURL2.com' // New repoURL2 value
     }
 
     stages {
-        stage('Checkout') {
+        stage('Clone GitHub Repository') {
             steps {
-                checkout scm
+                git branch: "${env.GIT_BRANCH}",
+                    credentialsId: "${env.GITHUB_CREDENTIALS_ID}",
+                    url: "${env.GITHUB_REPO_URL}"
             }
         }
 
         stage('Update YAML Files') {
             steps {
                 script {
-                    // Use a script block to properly handle PowerShell commands
-                    powershell '''
-                    # Ensure to use correct PowerShell syntax
-                    Get-ChildItem -Recurse -Filter *.yaml | ForEach-Object {
-                        (Get-Content $_.FullName) -replace '\\{\\{ .Values.repoURL1 \\}\\}', $env:REPO_URL | Set-Content $_.FullName
+                    // Define paths to the YAML files
+                    def yamlFiles = [
+                        'bic/applications/additional-secrets.yaml',
+                        'bic/applications/btp-secrets.yaml',
+                        'bic/applications/postgres-app.yaml'
+                    ]
+
+                    // Loop through each YAML file and replace the repoURL values based on the template
+                    yamlFiles.each { filePath ->
+                        def fileContent = readFile(filePath)
+
+                        // Replace placeholders for repoURL1 and repoURL2 in the template format
+                        fileContent = fileContent.replaceAll(/\{\? \{\.Values\.repoURL1: ''\} : ''\}/, "${env.NEW_REPO_URL1}")
+                        fileContent = fileContent.replaceAll(/\{\? \{\.Values\.repoURL2: ''\} : ''\}/, "${env.NEW_REPO_URL2}")
+
+                        // Write the updated content back to the file
+                        writeFile file: filePath, text: fileContent
                     }
-                    '''
                 }
             }
         }
 
-        stage('Commit Changes') {
+        stage('Commit and Push Changes') {
             steps {
                 script {
-                    // Configure Git
-                    bat "git config user.name 'jenkins'"
-                    bat "git config user.email 'jenkins@example.com'"
-
-                    // Add changes
-                    bat "git add ."
-
-                    // Commit changes
-                    bat "git commit -m 'Update repoURL1 to %REPO_URL%'"
-
-                    // Push changes
-                    bat "git push origin HEAD"
+                    sh 'git config user.name "jenkins"'
+                    sh 'git config user.email "jenkins@example.com"'
+                    
+                    // Add changes, commit, and push to GitHub
+                    sh 'git add .'
+                    sh 'git commit -m "Update repoURL values in YAML files based on template structure"'
+                    sh "git push origin ${env.GIT_BRANCH}"
                 }
             }
         }
