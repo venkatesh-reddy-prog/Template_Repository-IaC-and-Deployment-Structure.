@@ -30,4 +30,17 @@ pipeline {
 
                     // Loop through each YAML file and replace the repoURL values
                     yamlFiles.each { filePath ->
-                        def fileContent = readFile(filePath)
+                        def fileContent = readFile(filePath) // Missing closing bracket added
+                        
+                        // Replace repo URLs in file content
+                        fileContent = fileContent.replace('repoURL1', "${env.NEW_REPO_URL1}")
+                        fileContent = fileContent.replace('repoURL2', "${env.NEW_REPO_URL2}")
+
+                        // Write the updated content back to the file
+                        writeFile(file: filePath, text: fileContent)
+                    }
+                }
+            }
+        }
+    }
+}
