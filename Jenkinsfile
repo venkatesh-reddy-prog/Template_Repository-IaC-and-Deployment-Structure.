@@ -28,33 +28,6 @@ pipeline {
                         'bic/applications/postgres-app.yaml'
                     ]
 
-                    // Loop through each YAML file and replace the repoURL values based on the template
+                    // Loop through each YAML file and replace the repoURL values
                     yamlFiles.each { filePath ->
-                        def fileContent = readFile(filePath)
-
-                        // Replace placeholders for repoURL1 and repoURL2 in the template format
-                        fileContent = fileContent.replaceAll(/\{\? \{\.Values\.repoURL1: ''\} : ''\}/, "${env.NEW_REPO_URL1}")
-                        fileContent = fileContent.replaceAll(/\{\? \{\.Values\.repoURL2: ''\} : ''\}/, "${env.NEW_REPO_URL2}")
-
-                        // Write the updated content back to the file
-                        writeFile file: filePath, text: fileContent
-                    }
-                }
-            }
-        }
-
-        stage('Commit and Push Changes') {
-            steps {
-                script {
-                    sh 'git config user.name "jenkins"'
-                    sh 'git config user.email "jenkins@example.com"'
-                    
-                    // Add changes, commit, and push to GitHub
-                    sh 'git add .'
-                    sh 'git commit -m "Update repoURL values in YAML files based on template structure"'
-                    sh "git push origin ${env.GIT_BRANCH}"
-                }
-            }
-        }
-    }
-}
+                        def fileContent = readFile(filePath
