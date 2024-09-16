@@ -17,7 +17,7 @@ pipeline {
             steps {
                 script {
                     // List files in the directory for debugging
-                    sh 'ls -l bic/applications/'
+                    bat 'dir bic\\applications\\'
                 }
             }
         }
@@ -50,11 +50,11 @@ pipeline {
         stage('Commit Changes') {
             steps {
                 script {
-                    sh 'git config user.email "jenkins@example.com"'
-                    sh 'git config user.name "Jenkins"'
-                    sh 'git add bic/applications/additional-secrets.yaml'
-                    sh 'git commit -m "Update repoURL in additional-secrets.yaml"'
-                    sh 'git push origin ${BRANCH_NAME}'
+                    bat 'git config user.email "jenkins@example.com"'
+                    bat 'git config user.name "Jenkins"'
+                    bat 'git add bic\\applications\\additional-secrets.yaml'
+                    bat 'git commit -m "Update repoURL in additional-secrets.yaml"'
+                    bat 'git push origin ${BRANCH_NAME}'
                 }
             }
         }
