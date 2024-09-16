@@ -13,21 +13,12 @@ pipeline {
                 }
             }
         }
-        stage('List Files') {
-            steps {
-                script {
-                    // List files in the directory for debugging
-                    bat 'dir bic\\applications\\'
-                }
-            }
-        }
         stage('Update YAML') {
             steps {
                 script {
                     def filePath = 'bic/applications/additional-secrets.yaml'
-                    def newRepoURL = 'https://new-repo-url.com/new-repo.git'
+                    def newRepoURL = 'https://new-repo-url.com'
                     
-                    // Check if file exists
                     if (fileExists(filePath)) {
                         // Read the YAML file
                         def yaml = readYaml file: filePath
@@ -38,8 +29,7 @@ pipeline {
                                 source.repoURL = newRepoURL
                             }
                         }
-                        
-                        // Write the YAML file back
+                    
                         writeYaml file: filePath, data: yaml
                     } else {
                         error "File not found: ${filePath}"
