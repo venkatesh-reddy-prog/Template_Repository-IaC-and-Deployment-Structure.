@@ -1,26 +1,26 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres-app
   annotations:
-    argocd.argoproj.io/sync-wave: "12"
+    argocd.argoproj.io/sync-wave: '12'
+  name: postgres-app
 spec:
+  destination:
+    namespace: ic-controlplane
+    server: SERVER_URL
   project: default
   sources:
-    - repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
-      path: bic/landscape-manifests
-      targetRevision: HEAD
-  destination:
-    server: SERVER_URL
-    namespace: ic-controlplane
+  - path: bic/landscape-manifests
+    repoURL: https://github.com/venkatesh-reddy-prog/Template_Repo
+    targetRevision: HEAD
   syncPolicy:
-    syncOptions:
-      - CreateNamespace=true
-      - Replace=true
-      - PruneLast=true
     automated:
-      selfHeal: true
       prune: true
-status: 
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+    - Replace=true
+    - PruneLast=true
+status:
   sync:
     status: Synced
