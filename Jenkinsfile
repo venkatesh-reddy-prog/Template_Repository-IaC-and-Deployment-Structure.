@@ -31,20 +31,13 @@ pipeline {
                         if (fileExists(yamlFile)) {
                             def yamlContent = readYaml file: yamlFile
 
-                            // Check if 'sources' key exists in YAML content
-                            if (yamlContent.spec && yamlContent.spec.sources) {
-                                yamlContent.spec.sources.each { source ->
-                                    source.repoURL = params.REPO_URL
-                                }
-                            }
-                            // For 'postgres-app.yaml', 'sources' might be a list
-                            else if (yamlContent.spec && yamlContent.spec.sources instanceof List) {
-                                yamlContent.spec.sources.each { source ->
-                                    source.repoURL = params.REPO_URL
-                                }
-                            } 
-                            else if (yamlContent.spec && yamlContent.spec.source) {
+                            // Modify YAML content based on structure
+                            if (yamlContent.spec?.source) {
                                 yamlContent.spec.source.repoURL = params.REPO_URL
+                            } else if (yamlContent.spec?.sources) {
+                                yamlContent.spec.sources.each { source ->
+                                    source.repoURL = params.REPO_URL
+                                }
                             }
 
                             writeYaml file: yamlFile, data: yamlContent
