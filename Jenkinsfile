@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_CREDENTIALS_ID = 'your-github-credentials-id' // Jenkins credentials ID for GitHub
+        GITHUB_CREDENTIALS_ID = 'WAS' // Jenkins credentials ID for GitHub
         GITHUB_REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo' // GitHub repository URL
         GIT_BRANCH = 'main' // Branch where the files are located
         NEW_REPO_URL1 = 'https://new.repoURL1.com' // New repoURL1 value
@@ -12,9 +12,10 @@ pipeline {
     stages {
         stage('Clone GitHub Repository') {
             steps {
-                git branch: "${env.GIT_BRANCH}",
-                    credentialsId: "${env.GITHUB_CREDENTIALS_ID}",
-                    url: "${env.GITHUB_REPO_URL}"
+                // Cloning the repo with specific branch and credentials
+                git branch: 'main', 
+                    credentialsId: 'WAS', 
+                    url: 'https://github.com/venkatesh-reddy-prog/Template_Repo'
             }
         }
 
@@ -30,13 +31,9 @@ pipeline {
 
                     // Loop through each YAML file and replace the repoURL values
                     yamlFiles.each { filePath ->
-                        def fileContent = readFile(filePath) // Missing closing bracket added
-                        
-                        // Replace repo URLs in file content
-                        fileContent = fileContent.replace('repoURL1', "${env.NEW_REPO_URL1}")
-                        fileContent = fileContent.replace('repoURL2', "${env.NEW_REPO_URL2}")
-
-                        // Write the updated content back to the file
+                        def fileContent = readFile(filePath)
+                        fileContent = fileContent.replaceAll('repoURL1', "${env.NEW_REPO_URL1}")
+                        fileContent = fileContent.replaceAll('repoURL2', "${env.NEW_REPO_URL2}")
                         writeFile(file: filePath, text: fileContent)
                     }
                 }
