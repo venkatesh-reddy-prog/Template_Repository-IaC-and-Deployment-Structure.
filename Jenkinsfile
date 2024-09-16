@@ -1,20 +1,15 @@
 pipeline {
     agent any
-
     parameters {
-        string(name: 'REPO_URL', description: 'Repository URL to set in YAML files', defaultValue: 'https://example.com/new-repo.git')
+        string(name: 'REPO_URL', defaultValue: 'https://example.com/repo.git', description: 'Repository URL')
     }
-
-    options {
-        buildDiscarder(logRotator(numToKeepStr: '5'))
-        durabilityHint('MAX_SURVIVABILITY')
-        timeout(time: 1, unit: 'HOURS')
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
-                git branch: 'main', url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git', credentialsId: 'WAS'
+                checkout([$class: 'GitSCM',
+                          branches: [[name: 'main']],
+                          userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git']]
+                ])
             }
         }
 
@@ -30,6 +25,7 @@ pipeline {
                     yamlFiles.each { yamlFile ->
                         if (fileExists(yamlFile)) {
                             def yamlContent = readYaml file: yamlFile
+                            echo "Original content of ${yamlFile}: ${yamlContent}"
 
                             // Modify YAML content based on structure
                             if (yamlContent.spec?.source) {
@@ -38,6 +34,8 @@ pipeline {
                                 yamlContent.spec.sources.each { source ->
                                     source.repoURL = params.REPO_URL
                                 }
+                            } else {
+                                error "Unrecognized structure in ${yamlFile}"
                             }
 
                             writeYaml file: yamlFile, data: yamlContent
@@ -51,28 +49,30 @@ pipeline {
         }
 
         stage('Commit and Push Changes') {
+            when {
+                expression { return fileExists('bic/applications/additional-secrets.yaml') || fileExists('bic/applications/btp-secrets.yaml') || fileExists('bic/applications/postgres-app.yaml') }
+            }
             steps {
                 script {
-                    def commitMessage = "Update repoURL to ${params.REPO_URL} in all YAML files"
-                    sh 'git config --global user.email "your-email@example.com"'
-                    sh 'git config --global user.name "Your Name"'
-                    sh 'git add bic/applications/additional-secrets.yaml bic/applications/btp-secrets.yaml bic/applications/postgres-app.yaml'
-                    sh "git commit -m '${commitMessage}'"
-                    sh 'git push origin main'
+                    withCredentials([usernamePassword(credentialsId: 'WAS', usernameVariable: 'B Venkatesh Reddy', passwordVariable: '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')]) {
+                        sh '''
+                        git config user.name "B Venkatesh Reddy"
+                        git config user.email "bvenkateshreddy@gamil.com"
+                        git add .
+                        git commit -m "Updated YAML files with new repo URL"
+                        git push origin main
+                        '''
+                    }
                 }
             }
         }
     }
-
     post {
-        success {
-            echo 'Pipeline successful'
-        }
-        failure {
-            echo 'Pipeline failed'
-        }
         always {
             cleanWs()
+        }
+        failure {
+            echo "Pipeline failed"
         }
     }
 }
