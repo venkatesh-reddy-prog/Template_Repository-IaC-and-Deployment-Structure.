@@ -18,6 +18,12 @@ pipeline {
             }
         }
 
+        stage('List Files') {
+            steps {
+                sh 'ls -R bic/applications'
+            }
+        }
+
         stage('Modify YAML Files') {
             steps {
                 script {
@@ -29,12 +35,17 @@ pipeline {
 
                     yamlFiles.each { yamlFile ->
                         if (fileExists(yamlFile)) {
-                            def yamlContent = readYaml file: yamlFile
-                            yamlContent.spec.sources.each { source ->
-                                source.repoURL = params.REPO_URL
+                            echo "Processing file: ${yamlFile}"
+                            try {
+                                def yamlContent = readYaml file: yamlFile
+                                yamlContent.spec.sources.each { source ->
+                                    source.repoURL = params.REPO_URL
+                                }
+                                writeYaml file: yamlFile, data: yamlContent
+                                echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
+                            } catch (Exception e) {
+                                error "Failed to read or modify ${yamlFile}: ${e.getMessage()}"
                             }
-                            writeYaml file: yamlFile, data: yamlContent
-                            echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
                         } else {
                             error "File ${yamlFile} not found!"
                         }
@@ -47,11 +58,8 @@ pipeline {
             steps {
                 script {
                     def commitMessage = "Update repoURL to ${params.REPO_URL} in all YAML files"
-                    // Configure Git
-                    sh 'git config user.email "bvenkateshreddy87@gmail.com"'
-                    sh 'git config user.name "B Venkatesh Reddy"'
-                    
-                    // Add, commit, and push changes
+                    sh 'git config --global user.email "bvenkateshreddy87@gmail.com"'
+                    sh 'git config --global user.name "B Venkatesh Reddy"'
                     sh 'git add .'
                     sh "git commit -m '${commitMessage}' || echo 'No changes to commit'"
                     sh 'git push origin main'
