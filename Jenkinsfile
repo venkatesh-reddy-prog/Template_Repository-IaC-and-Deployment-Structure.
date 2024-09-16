@@ -1,82 +1,43 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'REPO_URL', defaultValue: 'https://example.com/repo.git', description: 'Repository URL')
+
+    environment {
+        GIT_REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo.git'
+        NEW_REPO_URL = 'https://new-repo-url.example.com/new-repo.git'
+        YAML_FILE_PATH = 'bic/applications/additional-secrets.yaml'
     }
+
     stages {
-        stage('Checkout SCM') {
+        stage('Checkout Code') {
             steps {
-                checkout([$class: 'GitSCM',
-                          branches: [[name: 'main']],
-                          userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git']]
-                ])
+                // Checkout the code from GitHub
+                git url: "${GIT_REPO_URL}"
             }
         }
 
-        stage('Modify YAML Files') {
+        stage('Update YAML') {
             steps {
                 script {
-                    def yamlFiles = [
-                        'bic/applications/additional-secrets.yaml',
-                        'bic/applications/btp-secrets.yaml',
-                        'bic/applications/postgres-app.yaml'
-                    ]
-
-                    yamlFiles.each { yamlFile ->
-                        if (fileExists(yamlFile)) {
-                            try {
-                                def yamlContent = readYaml file: yamlFile
-                                echo "Original content of ${yamlFile}: ${yamlContent}"
-
-                                // Modify YAML content based on structure
-                                if (yamlContent.spec?.source) {
-                                    yamlContent.spec.source.repoURL = params.REPO_URL
-                                } else if (yamlContent.spec?.sources) {
-                                    yamlContent.spec.sources.each { source ->
-                                        source.repoURL = params.REPO_URL
-                                    }
-                                } else {
-                                    error "Unrecognized structure in ${yamlFile}"
-                                }
-
-                                writeYaml file: yamlFile, data: yamlContent
-                                echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
-                            } catch (Exception e) {
-                                error "Failed to process ${yamlFile}: ${e.message}"
-                            }
-                        } else {
-                            error "File ${yamlFile} not found!"
-                        }
-                    }
+                    def file = readFile(YAML_FILE_PATH)
+                    def newFileContent = file.replaceAll(
+                        /repoURL:\s*https:\/\/github.tools.sap\/BIC\/bic-product-dev\.git/,
+                        "repoURL: ${NEW_REPO_URL}"
+                    )
+                    writeFile file: YAML_FILE_PATH, text: newFileContent
                 }
             }
         }
 
-        stage('Commit and Push Changes') {
-            when {
-                expression { return fileExists('bic/applications/additional-secrets.yaml') || fileExists('bic/applications/btp-secrets.yaml') || fileExists('bic/applications/postgres-app.yaml') }
-            }
+        stage('Commit Changes') {
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'your-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh '''
-                        git config user.name "Jenkins"
-                        git config user.email "jenkins@example.com"
-                        git add .
-                        git commit -m "Updated YAML files with new repo URL"
-                        git push origin main
-                        '''
-                    }
+                    sh 'git config user.name "jenkins"'
+                    sh 'git config user.email "jenkins@example.com"'
+                    sh 'git add ${YAML_FILE_PATH}'
+                    sh 'git commit -m "Updated repoURL in additional-secrets.yaml"'
+                    sh 'git push origin HEAD'
                 }
             }
-        }
-    }
-    post {
-        always {
-            cleanWs()
-        }
-        failure {
-            echo "Pipeline failed"
         }
     }
 }
