@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'REPO_URL', defaultValue: '', description: 'Repository URL to set in YAML files')
+        string(name: 'REPO_URL', description: 'Repository URL to set in YAML files', defaultValue: 'https://example.com/new-repo.git')
     }
 
     options {
@@ -30,9 +30,23 @@ pipeline {
                     yamlFiles.each { yamlFile ->
                         if (fileExists(yamlFile)) {
                             def yamlContent = readYaml file: yamlFile
-                            yamlContent.spec.sources.each { source ->
-                                source.repoURL = params.REPO_URL
+
+                            // Check if 'sources' key exists in YAML content
+                            if (yamlContent.spec && yamlContent.spec.sources) {
+                                yamlContent.spec.sources.each { source ->
+                                    source.repoURL = params.REPO_URL
+                                }
                             }
+                            // For 'postgres-app.yaml', 'sources' might be a list
+                            else if (yamlContent.spec && yamlContent.spec.sources instanceof List) {
+                                yamlContent.spec.sources.each { source ->
+                                    source.repoURL = params.REPO_URL
+                                }
+                            } 
+                            else if (yamlContent.spec && yamlContent.spec.source) {
+                                yamlContent.spec.source.repoURL = params.REPO_URL
+                            }
+
                             writeYaml file: yamlFile, data: yamlContent
                             echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
                         } else {
@@ -47,11 +61,11 @@ pipeline {
             steps {
                 script {
                     def commitMessage = "Update repoURL to ${params.REPO_URL} in all YAML files"
-                    bat 'git config --global user.email "bvenkateshreddy87@gmail.com"'
-                    bat 'git config --global user.name "B Venkatesh Reddy"'
-                    bat 'git add .'
-                    bat "git commit -m \"${commitMessage}\""
-                    bat 'git push origin main'
+                    sh 'git config --global user.email "your-email@example.com"'
+                    sh 'git config --global user.name "Your Name"'
+                    sh 'git add bic/applications/additional-secrets.yaml bic/applications/btp-secrets.yaml bic/applications/postgres-app.yaml'
+                    sh "git commit -m '${commitMessage}'"
+                    sh 'git push origin main'
                 }
             }
         }
