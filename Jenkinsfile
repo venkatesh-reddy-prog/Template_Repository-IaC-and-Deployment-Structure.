@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'REPO_URL', description: 'Repository URL to set in YAML files')
+        string(name: 'REPO_URL', defaultValue: '', description: 'Repository URL to set in YAML files')
     }
 
     options {
