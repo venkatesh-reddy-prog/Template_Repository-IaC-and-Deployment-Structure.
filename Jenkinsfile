@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     parameters {
-        string(name: 'NEW_REPO_URL', description: 'New repository URL to set in YAML files')
+        string(name: 'REPO_URL', description: 'Repository URL to set in all YAML files')
         string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to modify')
     }
 
@@ -23,16 +23,21 @@ pipeline {
         stage('Modify YAML Files') {
             steps {
                 script {
-                    def yamlFiles = ['bic/applications/additional-secrets.yaml', 
-                                     'bic/applications/btp-secrets.yaml', 
-                                     'bic/applications/postgres-app.yaml']
-
+                    def yamlFiles = [
+                        'bic/applications/additional-secrets.yaml',
+                        'bic/applications/btp-secrets.yaml',
+                        'bic/applications/postgres-app.yaml'
+                    ]
+                    
                     yamlFiles.each { file ->
                         if (fileExists(file)) {
                             def content = readFile(file)
-                            def modifiedContent = content.replaceAll(/repoURL:\s*\{\?\s*\{\.Values\.repoURL\d+:\s*''\}\s*:\s*''\}/, "repoURL: ${params.NEW_REPO_URL}")
+                            def modifiedContent = content.replaceAll(
+                                /repoURL:\s*['"](https:\/\/[^'"]+)['"]/, 
+                                "repoURL: \"${params.REPO_URL}\""
+                            )
                             writeFile file: file, text: modifiedContent
-                            echo "Modified file: ${file}"
+                            echo "Modified file: ${file} with new repoURL: ${params.REPO_URL}"
                         } else {
                             echo "File ${file} does not exist. Skipping."
                         }
