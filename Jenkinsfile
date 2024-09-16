@@ -21,24 +21,31 @@ pipeline {
         stage('Modify YAML Files') {
             steps {
                 script {
-                    def yamlFile = 'additional-secrets-app.yaml'
-                    def yamlContent = readYaml file: yamlFile
-                    yamlContent.spec.sources.each { source ->
-                        source.repoURL = params.REPO_URL
+                    def yamlFile = 'additional-secrets-app.yaml' // Modify path if file is elsewhere
+                    if (fileExists(yamlFile)) {
+                        def yamlContent = readYaml file: yamlFile
+                        yamlContent.spec.sources.each { source ->
+                            source.repoURL = params.REPO_URL
+                        }
+                        writeYaml file: yamlFile, data: yamlContent
+                        echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
+                    } else {
+                        error "File ${yamlFile} not found!"
                     }
-                    writeYaml file: yamlFile, data: yamlContent
-                    echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
                 }
             }
         }
 
         stage('Commit and Push Changes') {
             steps {
-                sh 'git config --global user.email "your-email@example.com"'
-                sh 'git config --global user.name "Your Name"'
-                sh 'git add .'
-                sh "git commit -m 'Update repoURL to ${params.REPO_URL}'"
-                sh 'git push origin main'
+                script {
+                    def commitMessage = "Update repoURL to ${params.REPO_URL}"
+                    sh 'git config --global user.email "your-email@example.com"'
+                    sh 'git config --global user.name "Your Name"'
+                    sh 'git add .'
+                    sh "git commit -m '${commitMessage}'"
+                    sh 'git push origin main'
+                }
             }
         }
     }
