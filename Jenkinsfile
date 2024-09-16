@@ -10,33 +10,27 @@ pipeline {
     stages {
         stage('Checkout Code') {
             steps {
-                // Checkout the code from GitHub
                 git url: "${GIT_REPO_URL}"
             }
         }
 
         stage('Update YAML') {
             steps {
-                script {
-                    def file = readFile(YAML_FILE_PATH)
-                    def newFileContent = file.replaceAll(
-                        /repoURL:\s*https:\/\/github.tools.sap\/BIC\/bic-product-dev\.git/,
-                        "repoURL: ${NEW_REPO_URL}"
-                    )
-                    writeFile file: YAML_FILE_PATH, text: newFileContent
-                }
+                sh """
+                    sed -i 's|repoURL: https://github.tools.sap/BIC/bic-product-dev.git|repoURL: ${NEW_REPO_URL}|' ${YAML_FILE_PATH}
+                """
             }
         }
 
         stage('Commit Changes') {
             steps {
-                script {
-                    sh 'git config user.name "jenkins"'
-                    sh 'git config user.email "jenkins@example.com"'
-                    sh 'git add ${YAML_FILE_PATH}'
-                    sh 'git commit -m "Updated repoURL in additional-secrets.yaml"'
-                    sh 'git push origin HEAD'
-                }
+                sh """
+                    git config user.name "B Venkatesh Reddy"
+                    git config user.email "bvenkateshreddy87@gmail.com"
+                    git add ${YAML_FILE_PATH}
+                    git commit -m "Updated repoURL in additional-secrets.yaml"
+                    git push origin HEAD
+                """
             }
         }
     }
