@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     def yamlFiles = [
-                        'bic/applications/additional-secrets.yaml',  // Correct filename
+                        'bic/applications/additional-secrets.yaml',
                         'bic/applications/btp-secrets.yaml',
                         'bic/applications/postgres-app.yaml'
                     ]
@@ -47,10 +47,13 @@ pipeline {
             steps {
                 script {
                     def commitMessage = "Update repoURL to ${params.REPO_URL} in all YAML files"
-                    sh 'git config --global user.email "your-email@example.com"'
-                    sh 'git config --global user.name "Your Name"'
+                    // Configure Git
+                    sh 'git config user.email "bvenkateshreddy87@gmail.com"'
+                    sh 'git config user.name "B Venkatesh Reddy"'
+                    
+                    // Add, commit, and push changes
                     sh 'git add .'
-                    sh "git commit -m '${commitMessage}'"
+                    sh "git commit -m '${commitMessage}' || echo 'No changes to commit'"
                     sh 'git push origin main'
                 }
             }
