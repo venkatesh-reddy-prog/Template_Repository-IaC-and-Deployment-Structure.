@@ -24,22 +24,26 @@ pipeline {
 
                     yamlFiles.each { yamlFile ->
                         if (fileExists(yamlFile)) {
-                            def yamlContent = readYaml file: yamlFile
-                            echo "Original content of ${yamlFile}: ${yamlContent}"
+                            try {
+                                def yamlContent = readYaml file: yamlFile
+                                echo "Original content of ${yamlFile}: ${yamlContent}"
 
-                            // Modify YAML content based on structure
-                            if (yamlContent.spec?.source) {
-                                yamlContent.spec.source.repoURL = params.REPO_URL
-                            } else if (yamlContent.spec?.sources) {
-                                yamlContent.spec.sources.each { source ->
-                                    source.repoURL = params.REPO_URL
+                                // Modify YAML content based on structure
+                                if (yamlContent.spec?.source) {
+                                    yamlContent.spec.source.repoURL = params.REPO_URL
+                                } else if (yamlContent.spec?.sources) {
+                                    yamlContent.spec.sources.each { source ->
+                                        source.repoURL = params.REPO_URL
+                                    }
+                                } else {
+                                    error "Unrecognized structure in ${yamlFile}"
                                 }
-                            } else {
-                                error "Unrecognized structure in ${yamlFile}"
-                            }
 
-                            writeYaml file: yamlFile, data: yamlContent
-                            echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
+                                writeYaml file: yamlFile, data: yamlContent
+                                echo "Modified file: ${yamlFile} with new repoURL: ${params.REPO_URL}"
+                            } catch (Exception e) {
+                                error "Failed to process ${yamlFile}: ${e.message}"
+                            }
                         } else {
                             error "File ${yamlFile} not found!"
                         }
@@ -54,10 +58,10 @@ pipeline {
             }
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'WAS', usernameVariable: 'B Venkatesh Reddy', passwordVariable: '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')]) {
+                    withCredentials([usernamePassword(credentialsId: 'your-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
                         sh '''
-                        git config user.name "B Venkatesh Reddy"
-                        git config user.email "bvenkateshreddy@gamil.com"
+                        git config user.name "Jenkins"
+                        git config user.email "jenkins@example.com"
                         git add .
                         git commit -m "Updated YAML files with new repo URL"
                         git push origin main
