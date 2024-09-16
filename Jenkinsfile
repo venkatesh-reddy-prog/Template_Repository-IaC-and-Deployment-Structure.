@@ -33,7 +33,7 @@ pipeline {
                         if (fileExists(file)) {
                             def content = readFile(file)
                             def modifiedContent = content.replaceAll(
-                                ~/repoURL:\s*['"](https:\\/\\/[^'"]+)['"]/, 
+                                ~/repoURL:\s*['"](.*?)['"]/,
                                 "repoURL: \"${params.REPO_URL}\""
                             )
                             writeFile file: file, text: modifiedContent
