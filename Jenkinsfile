@@ -16,7 +16,7 @@ pipeline {
         stage('Update YAML') {
             steps {
                 script {
-                    def filePath = 'bic/applications'
+                    def filePath = 'bic/applications/additional-secrets.yaml'
                     def newRepoURL = 'https://new-repo-url.com/new-repo.git'
                     
                     // Read the YAML file
