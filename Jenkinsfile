@@ -6,7 +6,7 @@ pipeline {
         BRANCH_NAME = 'main'
     }
     stages {
-        stage('Checkout') {
+        stage('Check Credentials') {
             steps {
                 script {
                     git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${REPO_URL}", branch: "${BRANCH_NAME}"
