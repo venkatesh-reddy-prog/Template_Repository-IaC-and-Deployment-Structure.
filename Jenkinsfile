@@ -13,24 +13,37 @@ pipeline {
                 }
             }
         }
+        stage('List Files') {
+            steps {
+                script {
+                    // List files in the directory for debugging
+                    sh 'ls -l bic/applications/'
+                }
+            }
+        }
         stage('Update YAML') {
             steps {
                 script {
                     def filePath = 'bic/applications/additional-secrets.yaml'
                     def newRepoURL = 'https://new-repo-url.com/new-repo.git'
                     
-                    // Read the YAML file
-                    def yaml = readYaml file: filePath
-                    
-                    // Update the repoURL in sources
-                    yaml.spec.sources.each { source ->
-                        if (source.repoURL == 'https://github.tools.sap/BIC/bic-product-dev.git') {
-                            source.repoURL = newRepoURL
+                    // Check if file exists
+                    if (fileExists(filePath)) {
+                        // Read the YAML file
+                        def yaml = readYaml file: filePath
+                        
+                        // Update the repoURL in sources
+                        yaml.spec.sources.each { source ->
+                            if (source.repoURL == 'https://github.tools.sap/BIC/bic-product-dev.git') {
+                                source.repoURL = newRepoURL
+                            }
                         }
+                        
+                        // Write the YAML file back
+                        writeYaml file: filePath, data: yaml
+                    } else {
+                        error "File not found: ${filePath}"
                     }
-                    
-                    // Write the YAML file back
-                    writeYaml file: filePath, data: yaml
                 }
             }
         }
@@ -47,4 +60,3 @@ pipeline {
         }
     }
 }
-
