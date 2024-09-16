@@ -1,32 +1,63 @@
 pipeline {
     agent any
+
+    parameters {
+        string(name: 'NEW_REPO_URL', description: 'New repository URL to set in YAML files')
+        string(name: 'BRANCH', defaultValue: 'main', description: 'Branch to modify')
+    }
+
     stages {
-        stage('Clone GitHub Repository') {
+        stage('Checkout') {
             steps {
-                git url: 'https://github.com/venkatesh-reddy-prog/Template_Repo', branch: 'main'
+                bat "git config --global core.longpaths true"
+                checkout([$class: 'GitSCM', 
+                    branches: [[name: "*/${params.BRANCH}"]], 
+                    userRemoteConfigs: [[
+                        url: 'https://github.com/venkatesh-reddy-prog/Template_Repo', 
+                        credentialsId: 'WAS'
+                    ]]
+                ])
             }
         }
-        
-        stage('Update YAML Files') {
+
+        stage('Modify YAML Files') {
             steps {
                 script {
-                    def yamlFilePath = 'bic/applications/additional-secrets.yaml'
-                    def yamlData = readYaml file: yamlFilePath
-                    
-                    // Check if the file exists and delete it before writing new data
-                    def file = new File(yamlFilePath)
-                    if (file.exists()) {
-                        echo "File ${yamlFilePath} exists, deleting it..."
-                        file.delete()
-                    }
+                    def yamlFiles = ['bic/applications/additional-secrets.yaml', 
+                                     'bic/applications/btp-secrets.yaml', 
+                                     'bic/applications/postgres-app.yaml']
 
-                    // Writing new YAML content
-                    echo "Writing new YAML content..."
-                    writeYaml file: yamlFilePath, data: yamlData
-                    
-                    echo "YAML file updated successfully!"
+                    yamlFiles.each { file ->
+                        if (fileExists(file)) {
+                            def content = readFile(file)
+                            def modifiedContent = content.replaceAll(/repoURL:\s*\{\?\s*\{\.Values\.repoURL\d+:\s*''\}\s*:\s*''\}/, "repoURL: ${params.NEW_REPO_URL}")
+                            writeFile file: file, text: modifiedContent
+                            echo "Modified file: ${file}"
+                        } else {
+                            echo "File ${file} does not exist. Skipping."
+                        }
+                    }
                 }
             }
+        }
+
+        stage('Commit and Push Changes') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'WAS', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USERNAME')]) {
+                    bat """
+                        git config user.email "jenkins@example.com"
+                        git config user.name "Jenkins"
+                        git add bic/applications/*.yaml
+                        git diff --quiet && git diff --staged --quiet || (git commit -m "Update repoURL in YAML files" && git push https://%GIT_USERNAME%:%GIT_PASSWORD%@github.com/venkatesh-reddy-prog/Template_Repo.git ${params.BRANCH})
+                    """
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
