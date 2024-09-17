@@ -15,7 +15,7 @@ pipeline{
             steps{
                 script{
                     bat '''
-                        pip install pyyaml gitpython
+                        !pip install pyyaml gitpython
                     '''
                 }
             }
