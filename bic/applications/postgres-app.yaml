@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
   - path: bic/landscape-manifests
-    repoURL: http://localhost:8080/job/Repo_Clone/10/console
+    repoURL: https://github.com/venkat
     targetRevision: HEAD
   syncPolicy:
     automated:
