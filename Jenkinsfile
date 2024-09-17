@@ -19,7 +19,7 @@ pipeline {
             steps {
                 script {
                     withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
-                        powershell 'python templatee.py'
+                        bat 'python templatee.py'
                     }
                 }
             }
