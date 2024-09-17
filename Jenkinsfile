@@ -18,19 +18,14 @@ pipeline {
         stage('Run Script') {
             steps {
                 script {
-                    // Ensure the parameter is not empty
-                    if (params.NEW_REPO_URL.trim()) {
+                    if (params.NEW_REPO_URL) {
                         withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
                             echo "Starting Python script execution"
-                            try {
-                                bat 'python templatee.py'
-                            } catch (Exception e) {
-                                error "Python script execution failed: ${e.getMessage()}"
-                            }
+                            bat 'python templatee.py'
                             echo "Finished Python script execution"
                         }
                     } else {
-                        error "NEW_REPO_URL parameter is empty."
+                        error "NEW_REPO_URL parameter is required."
                     }
                 }
             }
