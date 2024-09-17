@@ -1,28 +1,28 @@
 pipeline {
     agent any
+
     parameters {
-        string(name: 'NEW_REPO_URL', defaultValue: '', description: 'Enter the new repoURL value')
+        string(name: 'NEW_REPO_URL')
     }
+
     stages {
-        stage('Cloning') {
+        stage('Checkout') {
             steps {
-                script {
-                    checkout([$class: 'GitSCM',
-                      userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git', credentialsId: 'WAS']],
-                      branches: [[name: '*/main']],
-                      doGenerateSubmoduleConfigurations: false,
-                      submoduleCfg: [],
-                      useShallowClone: true
-                    ])
-                }
+                checkout([$class: 'GitSCM',
+                          branches: [[name: '*/main']],
+                          userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git']]
+                ])
             }
         }
-        stage('Modifying yaml files') {
+        
+        stage('Running Python Script') {
             steps {
                 script {
-                    bat '''
+                    withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
+                        powershell '''
                         python templatee.py
-                    '''
+                        '''
+                    }
                 }
             }
         }
