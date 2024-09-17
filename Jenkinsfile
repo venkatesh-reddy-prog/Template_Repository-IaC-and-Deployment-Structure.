@@ -11,15 +11,6 @@ pipeline{
                 }
             }
         }
-        stage('Dependencies that need to be installed'){
-            steps{
-                script{
-                    bat '''
-                        !pip install pyyaml gitpython
-                    '''
-                }
-            }
-        }
         stage('Modifying yaml files'){
             steps{
                 script{
