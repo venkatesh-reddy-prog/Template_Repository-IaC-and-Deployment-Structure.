@@ -1,10 +1,11 @@
 pipeline {
     agent any
-    
+
     environment {
-        NEW_REPO_URL = credentials('new-repo-url') // Jenkins credentials ID for the new repo URL
+        // Set the new repository URL directly as an environment variable
+        NEW_REPO_URL = 'https://your-new-repo-url.git' // Replace with your actual new repo URL
     }
-    
+
     stages {
         stage('Checkout Template Repo') {
             steps {
@@ -14,7 +15,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Run Update Script') {
             steps {
                 script {
@@ -26,7 +27,7 @@ pipeline {
                 }
             }
         }
-        
+
         stage('Commit and Push Changes') {
             steps {
                 script {
@@ -47,7 +48,7 @@ pipeline {
             }
         }
     }
-    
+
     post {
         success {
             echo 'Pipeline completed successfully!'
