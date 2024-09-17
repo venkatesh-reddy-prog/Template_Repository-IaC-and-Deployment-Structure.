@@ -15,13 +15,11 @@ pipeline {
             }
         }
         
-        stage('Running Python Script') {
+        stage('Run Script') {
             steps {
                 script {
                     withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
-                        powershell '''
-                        python templatee.py
-                        '''
+                        powershell 'python templatee.py'
                     }
                 }
             }
