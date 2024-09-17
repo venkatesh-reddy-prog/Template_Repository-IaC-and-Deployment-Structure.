@@ -16,7 +16,7 @@ pipeline {
             steps {
                 withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
                     bat '''
-                        python template.py
+                        python templatee.py
                     '''
                 }
             }
