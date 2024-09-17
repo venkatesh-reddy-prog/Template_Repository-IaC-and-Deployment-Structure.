@@ -8,7 +8,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                script {
+                    checkout scm
+                    }
+                }
             }
         }
         stage('Install Dependencies') {
@@ -31,5 +34,4 @@ pipeline {
             }
         }
     }
-
-    
+}
