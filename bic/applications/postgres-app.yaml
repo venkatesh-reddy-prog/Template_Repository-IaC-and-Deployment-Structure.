@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
   - path: bic/landscape-manifests
-    repoURL: https://github.com/venkatyuvyfyeckjgikjbkjvkjb
+    repoURL: https://github.com/venkatesh-reddy-prog/Template_Repo/blob/main/Jenkinsfile
     targetRevision: HEAD
   syncPolicy:
     automated:
