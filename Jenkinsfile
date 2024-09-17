@@ -19,9 +19,6 @@ pipeline {
         stage('Run Update Script') {
             steps {
                 script {
-                    // Ensure Python and necessary packages are installed
-                    bat 'pip install -r requirements.txt || echo "No requirements.txt file or installation failed"'
-
                     // Run the Python script
                     bat 'python templatee.py'
                 }
