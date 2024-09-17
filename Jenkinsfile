@@ -19,7 +19,10 @@ pipeline {
             steps {
                 script {
                     withEnv(["NEW_REPO_URL=${params.NEW_REPO_URL}"]) {
+                        echo "Starting Python script execution"
+                        bat 'python -c "print(\'Environment variable NEW_REPO_URL: %NEW_REPO_URL%\')"'
                         bat 'python templatee.py'
+                        echo "Finished Python script execution"
                     }
                 }
             }
