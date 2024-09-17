@@ -1,52 +1,33 @@
-pipeline {
+pipeline{
     agent any
-    environment {
-        GIT_CREDENTIALS_ID = 'WAS'
-        REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo'
-        BRANCH_NAME = 'main'
+    parameters{
+        string(name: 'NEW_REPO_URL', defaultValue:'', description:'Enter the new repoURL value')
     }
-    stages {
-        stage('Check Credentials') {
-            steps {
-                script {
-                    git credentialsId: "${GIT_CREDENTIALS_ID}", url: "${REPO_URL}", branch: "${BRANCH_NAME}"
+    stages{
+        stage('Cloning'){
+            steps{
+                script{
+                    checkout scm
                 }
             }
         }
-        stage('Update YAML') {
-            steps {
-                script {
-                    def filePath = 'bic/applications/additional-secrets.yaml'
-                    def newRepoURL = 'https://new-repo-url.com'
-                    
-                    if (fileExists(filePath)) {
-                        // Read the YAML file
-                        def yaml = readYaml file: filePath
-                        
-                        // Update the repoURL in sources
-                        yaml.spec.sources.each { source ->
-                            if (source.repoURL == 'https://github.tools.sap/BIC/bic-product-dev.git') {
-                                source.repoURL = newRepoURL
-                            }
-                        }
-                    
-                        writeYaml file: filePath, data: yaml
-                    } else {
-                        error "File not found: ${filePath}"
-                    }
+        stage('Dependencies that need to be installed'){
+            steps{
+                script{
+                    bat '''
+                        pip install pyyaml gitpython
+                    '''
                 }
             }
         }
-        stage('Commit Changes') {
-            steps {
-                script {
-                    bat 'git config user.email "jenkins@example.com"'
-                    bat 'git config user.name "Jenkins"'
-                    bat 'git add bic\\applications\\additional-secrets.yaml'
-                    bat 'git commit -m "Update repoURL in additional-secrets.yaml"'
-                    bat 'git push origin ${BRANCH_NAME}'
+        stage('Modifying yaml files'){
+            steps{
+                script{
+                    bat 'python templatee.py'
                 }
             }
         }
     }
 }
+
+                    
