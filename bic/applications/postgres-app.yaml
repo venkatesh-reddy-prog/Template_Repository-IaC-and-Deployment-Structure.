@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
   - path: bic/landscape-manifests
-    repoURL: https://github.com/ven
+    repoURL: njdaxbhgxnhx
     targetRevision: HEAD
   syncPolicy:
     automated:
