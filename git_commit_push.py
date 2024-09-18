@@ -2,9 +2,15 @@ from git import Repo, GitCommandError
 
 clone_dir = 'Template_Repo'
 branch_name = 'main'
-
+user_name = 'B Venkatesh Reddy'  
+user_email = 'bvenkateshreddy87@gmail.com'  
 def commit_and_push_changes():
     repo = Repo(clone_dir)
+    
+    # Configure Git user locally
+    print(f"Configuring Git user with name: {user_name} and email: {user_email}")
+    repo.config_writer().set_value("user", "name", user_name).release()
+    repo.config_writer().set_value("user", "email", user_email).release()
 
     print("Adding changes to git...")
     repo.git.add('bic/applications/')
