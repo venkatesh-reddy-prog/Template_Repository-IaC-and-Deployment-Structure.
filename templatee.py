@@ -20,6 +20,7 @@ def clone_repo(repo_url, clone_dir):
     if not os.path.exists(clone_dir):
         print(f"Cloning repository from {repo_url} into {clone_dir}...")
         Repo.clone_from(repo_url, clone_dir)
+        print("Repository cloned successfully.")
     else:
         print(f"Repository already cloned in {clone_dir}.")
 
@@ -62,6 +63,7 @@ def update_yaml(file_path, occurrence):
         print(f"No updates made to {full_file_path}.")
 
 def main():
+    print("Starting script...")
     clone_repo(repo_url, clone_dir)
     
     repo = Repo(clone_dir)
@@ -83,18 +85,21 @@ def main():
         print(f"Pulling latest changes from {branch_name}...")
         repo.git.pull('origin', branch_name)
 
+        print("Modifying YAML files...")
         for file_path, occurrence in files_to_modify.items():
             update_yaml(file_path, occurrence)
 
+        print("Adding changes to git...")
         repo.git.add('bic/applications/')
-        
+
         if repo.is_dirty():
             try:
+                print("Committing changes...")
                 repo.git.commit(m="Update repoURL in YAML files")
                 print("Committed changes.")
                 
                 print("Pushing changes to remote...")
-                repo.git.push('origin', branch_name)  # Ensure you're pushing after committing
+                repo.git.push('origin', branch_name)
                 print("Changes pushed to remote.")
             except GitCommandError as e:
                 print(f"Failed to commit or push changes: {e}")
