@@ -1,7 +1,14 @@
+# update_yaml.py
 import os
 import yaml
 
-def update_yaml(file_path, occurrence, clone_dir, new_repo_url):
+# Get NEW_REPO_URL from environment variables
+new_repo_url = os.getenv('NEW_REPO_URL')
+
+if not new_repo_url:
+    raise ValueError("The environment variable 'NEW_REPO_URL' is not set.")
+
+def update_yaml(file_path, occurrence, clone_dir):
     full_file_path = os.path.join(clone_dir, file_path)
 
     if not os.path.exists(full_file_path):
@@ -43,3 +50,15 @@ def update_yaml(file_path, occurrence, clone_dir, new_repo_url):
             print(f"Error writing {full_file_path}: {e}")
     else:
         print(f"No updates made to {full_file_path}.")
+
+# Example usage
+if __name__ == "__main__":
+    clone_dir = 'Template_Repo'
+    files_to_modify = {
+        'bic/applications/additional-secrets.yaml': 2,
+        'bic/applications/btp-secrets.yaml': 1,
+        'bic/applications/postgres-app.yaml': 1
+    }
+
+    for file_path, occurrence in files_to_modify.items():
+        update_yaml(file_path, occurrence, clone_dir)
