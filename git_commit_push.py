@@ -10,8 +10,7 @@ def commit_and_push_changes():
     
     if repo.is_dirty():
         repo.git.commit(m="Update repoURL in YAML files")
-        repo.git.pull('origin', branch_name)
-        repo.git.push('origin', branch_name)
+        repo.git.push('origin', branch_name, force=True)
 
 if __name__ == "__main__":
     commit_and_push_changes()
