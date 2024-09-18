@@ -28,7 +28,7 @@ pipeline {
             steps {
                 script {
                     echo 'Updating YAML files...'
-                    bat "set NEW_REPO_URL=${params.NEW_REPO_URL} && python main.py"
+                    bat "set NEW_REPO_URL=${params.NEW_REPO_URL} && python update_yaml.py"
                 }
             }
         }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo 'Pushing changes to the repository...'
-                    bat "set NEW_REPO_URL=${params.NEW_REPO_URL} && python main.py"
+                    bat "python git_operations.py"
                 }
             }
         }
