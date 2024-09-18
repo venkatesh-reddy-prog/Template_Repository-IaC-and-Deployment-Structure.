@@ -1,38 +1,29 @@
 pipeline {
     agent any
-
-    environment {
-        NEW_REPO_URL = 'https://your-new-repo-url.git'
+    parameters {
+        string(name: 'NEW_REPO_URL', defaultValue: '')
     }
-
     stages {
-        stage('Checkout Template Repo') {
+        stage('Checkout') {
             steps {
-                script {
-                    git url: 'https://github.com/venkatesh-reddy-prog/Template_Repo.git', branch: 'main'
-                }
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo']])
             }
         }
-
-        stage('Run Update Script') {
+        stage('Run Python Script') {
             steps {
                 script {
                     bat 'python templatee.py'
                 }
             }
         }
-
-        stage('Commit and Push Changes') {
+        stage('Commit Changes') {
             steps {
                 script {
-                    def changes = bat(script: 'git status --porcelain', returnStdout: true).trim()
-                    
-                    if (changes) {
-                        bat '''
-                        git add .
-                        git commit -m "Update repoURL in YAML files"
-                        git push origin main
-                        '''
+                    def status = bat(script: 'git status --porcelain', returnStdout: true).trim()
+                    if (status) {
+                        bat 'git add bic/applications/*.yaml'
+                        bat 'git commit -m "Update repoURL in YAML files"'
+                        bat 'git push origin main'
                     } else {
                         echo "No changes to commit."
                     }
