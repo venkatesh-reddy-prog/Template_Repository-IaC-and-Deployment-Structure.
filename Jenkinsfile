@@ -1,24 +1,21 @@
 pipeline {
     agent any
+
     parameters {
-        string(name: 'NEW_REPO_URL', defaultValue: '', description: 'New repository URL to update in YAML files')
+        string(name: 'NEW_REPO_URL', defaultValue: '', description: 'The new repository URL to be used for updating YAML files')
     }
-    environment {
-        // Ensure that the NEW_REPO_URL environment variable is available in all stages
-        NEW_REPO_URL = "${params.NEW_REPO_URL}"
-    }
+
     stages {
-        stage('Set Environment') {
+        stage('Install Dependencies') {
             steps {
                 script {
-                    if (!env.NEW_REPO_URL) {
-                        error("The environment variable 'NEW_REPO_URL' must be set.")
-                    }
-                    echo "NEW_REPO_URL is set to: ${env.NEW_REPO_URL}"
+                    echo 'Installing dependencies...'
+                    bat 'pip install gitpython pyyaml'
                 }
             }
         }
-        stage('Clone Repo') {
+        
+        stage('Clone Repository') {
             steps {
                 script {
                     echo 'Cloning repository...'
@@ -26,38 +23,32 @@ pipeline {
                 }
             }
         }
-        stage('Modify YAML Files') {
+        
+        stage('Update YAML Files') {
             steps {
                 script {
-                    echo 'Modifying YAML files...'
-                    bat 'python modify_yaml.py'
+                    echo 'Updating YAML files...'
+                    bat "set NEW_REPO_URL=${params.NEW_REPO_URL} && python main.py"
                 }
             }
         }
-        stage('Commit and Push Changes') {
+
+        stage('Push Changes') {
             steps {
                 script {
-                    echo 'Committing and pushing changes...'
-                    bat 'python git_commit_push.py'
+                    echo 'Pushing changes to the repository...'
+                    bat "set NEW_REPO_URL=${params.NEW_REPO_URL} && python main.py"
                 }
             }
         }
     }
+
     post {
-        always {
-            script {
-                echo 'Pipeline complete.'
-            }
-        }
         success {
-            script {
-                echo 'Changes have been successfully pushed.'
-            }
+            echo 'Pipeline completed successfully.'
         }
         failure {
-            script {
-                echo 'Pipeline failed.'
-            }
+            echo 'Pipeline failed.'
         }
     }
 }
