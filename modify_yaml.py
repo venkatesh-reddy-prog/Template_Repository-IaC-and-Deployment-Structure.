@@ -17,18 +17,10 @@ def update_yaml(file_path, occurrence):
     full_file_path = os.path.join(clone_dir, file_path)
     
     if not os.path.exists(full_file_path):
-        print(f"File not found: {full_file_path}")
         return
     
-    print(f"Processing file: {full_file_path}")
-    
     with open(full_file_path, 'r') as file:
-        try:
-            data = yaml.safe_load(file)
-            print(f"Loaded data from {full_file_path}")
-        except yaml.YAMLError as e:
-            print(f"Error reading YAML file {full_file_path}: {e}")
-            return
+        data = yaml.safe_load(file)
 
     def find_and_update(data, count=0):
         if isinstance(data, dict):
@@ -36,7 +28,6 @@ def update_yaml(file_path, occurrence):
                 if key == 'repoURL':
                     count += 1
                     if count == occurrence:
-                        print(f"Updating {key} in {file_path} to {new_repo_url}")
                         data[key] = new_repo_url
                 count = find_and_update(value, count)
         elif isinstance(data, list):
@@ -47,11 +38,7 @@ def update_yaml(file_path, occurrence):
     find_and_update(data)
     
     with open(full_file_path, 'w') as file:
-        try:
-            yaml.dump(data, file)
-            print(f"Updated {full_file_path}.")
-        except yaml.YAMLError as e:
-            print(f"Error writing YAML file {full_file_path}: {e}")
+        yaml.dump(data, file)
 
 if __name__ == "__main__":
     for file_path, occurrence in files_to_modify.items():
