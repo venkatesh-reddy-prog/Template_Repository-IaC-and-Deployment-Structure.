@@ -6,6 +6,7 @@ pipeline {
     environment {
         NEW_REPO_URL = "${params.NEW_REPO_URL}"
     }
+    stages {
         stage('Clone Repo') {
             steps {
                 script {
@@ -18,7 +19,7 @@ pipeline {
             steps {
                 script {
                     echo 'Modifying YAML files...'
-                    bat 'python modify_yaml.py'
+                    bat "python modify_yaml.py --new-repo-url=${NEW_REPO_URL}"
                 }
             }
         }
