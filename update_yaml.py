@@ -1,6 +1,7 @@
 # update_yaml.py
 import os
 import yaml
+import re
 
 # Get NEW_REPO_URL from environment variables
 new_repo_url = os.getenv('NEW_REPO_URL')
@@ -18,9 +19,16 @@ def update_yaml(file_path, occurrence, clone_dir):
     print(f"Processing file: {full_file_path}")
 
     try:
+        # Preprocess the YAML file: Replace $landscape-values with a placeholder
         with open(full_file_path, 'r') as file:
-            data = yaml.safe_load(file)
-            print(f"Loaded data from {full_file_path}")
+            content = file.read()
+
+        # Replace variables like $landscape-values with a valid string that YAML can parse
+        content = re.sub(r'\$landscape-values', '/path/to/landscape-values', content)
+
+        # Load the preprocessed YAML
+        data = yaml.safe_load(content)
+        print(f"Loaded data from {full_file_path}")
     except (IOError, yaml.YAMLError) as e:
         print(f"Error reading {full_file_path}: {e}")
         return
@@ -43,6 +51,7 @@ def update_yaml(file_path, occurrence, clone_dir):
 
     if updated_count > 0:
         try:
+            # Write the modified YAML content back to the file
             with open(full_file_path, 'w') as file:
                 yaml.dump(data, file)
                 print(f"Updated {full_file_path} with {updated_count} changes.")
