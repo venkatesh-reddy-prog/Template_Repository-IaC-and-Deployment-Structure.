@@ -1,37 +1,17 @@
-from git import Repo, GitCommandError
+from git import Repo
 
 clone_dir = 'Template_Repo'
 branch_name = 'main'
-user_name = 'B Venkatesh Reddy'  
-user_email = 'bvenkateshreddy87@gmail.com'  
+
 def commit_and_push_changes():
     repo = Repo(clone_dir)
     
-    # Configure Git user locally
-    print(f"Configuring Git user with name: {user_name} and email: {user_email}")
-    repo.config_writer().set_value("user", "name", user_name).release()
-    repo.config_writer().set_value("user", "email", user_email).release()
-
-    print("Adding changes to git...")
     repo.git.add('bic/applications/')
-
+    
     if repo.is_dirty():
-        try:
-            print("Committing changes...")
-            repo.git.commit(m="Update repoURL in YAML files")
-            print("Committed changes.")
-        except GitCommandError as e:
-            print(f"Failed to commit changes: {e}")
-            return
-
-        try:
-            print("Pushing changes to remote...")
-            repo.git.push('origin', branch_name)
-            print("Changes pushed to remote.")
-        except GitCommandError as e:
-            print(f"Failed to push changes: {e}")
-    else:
-        print("No changes to commit.")
+        repo.git.commit(m="Update repoURL in YAML files")
+        repo.git.pull('origin', branch_name)
+        repo.git.push('origin', branch_name)
 
 if __name__ == "__main__":
     commit_and_push_changes()
