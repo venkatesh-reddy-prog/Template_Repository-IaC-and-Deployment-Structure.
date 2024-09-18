@@ -3,45 +3,60 @@ pipeline {
     parameters {
         string(name: 'NEW_REPO_URL', defaultValue: '', description: 'New repository URL to update in YAML files')
     }
+    environment {
+        // Ensure that the NEW_REPO_URL environment variable is available in all stages
+        NEW_REPO_URL = "${params.NEW_REPO_URL}"
+    }
     stages {
-        stage('Check Python Path') {
+        stage('Set Environment') {
             steps {
                 script {
-                    echo 'Checking Python version and path...'
-                    bat 'where python'
-                    bat 'python --version'
-                }
-            }
-        }
-        stage('Checkout') {
-            steps {
-                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/venkatesh-reddy-prog/Template_Repo']])
-            }
-        }
-        stage('Run Python Script') {
-            steps {
-                script {
-                    echo 'Starting Python script execution...'
-                    bat 'python templatee.py'
-                    echo 'Python script execution completed.'
-                }
-            }
-        }
-        stage('Check Git Status and Commit') {
-            steps {
-                script {
-                    echo 'Checking for changes...'
-                    def status = bat(script: 'git status --porcelain', returnStdout: true).trim()
-                    if (status) {
-                        echo "Changes detected, committing..."
-                        bat 'git add bic/applications/*.yaml'
-                        bat 'git commit -m "Update repoURL in YAML files"'
-                        echo "Pushing changes to remote..."
-                        bat 'git push origin main'
-                    } else {
-                        echo "No changes to commit."
+                    if (!env.NEW_REPO_URL) {
+                        error("The environment variable 'NEW_REPO_URL' must be set.")
                     }
+                    echo "NEW_REPO_URL is set to: ${env.NEW_REPO_URL}"
                 }
+            }
+        }
+        stage('Clone Repo') {
+            steps {
+                script {
+                    echo 'Cloning repository...'
+                    bat 'python clone_repo.py'
+                }
+            }
+        }
+        stage('Modify YAML Files') {
+            steps {
+                script {
+                    echo 'Modifying YAML files...'
+                    bat 'python modify_yaml.py'
+                }
+            }
+        }
+        stage('Commit and Push Changes') {
+            steps {
+                script {
+                    echo 'Committing and pushing changes...'
+                    bat 'python git_commit_push.py'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                echo 'Pipeline complete.'
+            }
+        }
+        success {
+            script {
+                echo 'Changes have been successfully pushed.'
+            }
+        }
+        failure {
+            script {
+                echo 'Pipeline failed.'
             }
         }
     }
