@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
   - path: bic/landscape-manifests
-    repoURL: http://localhost:8080/job/wvenevew
+    repoURL: C:\Users\I751676\Desktop\Template_Repo_Folder
     targetRevision: HEAD
   syncPolicy:
     automated:
