@@ -1,8 +1,7 @@
----
 config:
   component:
-    group_id: com.sap.it.broker
     artifact_id: trm-broker-assembly
     extension: mtar
+    group_id: com.sap.it.broker
     mta_id: trm-broker
-    version: ""
+    version: ''

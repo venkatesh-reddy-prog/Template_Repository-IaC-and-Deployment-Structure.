@@ -1,6 +1,5 @@
----
- mta_ext:
+mta_ext:
   modules:
-    - name: it-gb
-      parameters:
-        instances: 1
+  - name: it-gb
+    parameters:
+      instances: 1

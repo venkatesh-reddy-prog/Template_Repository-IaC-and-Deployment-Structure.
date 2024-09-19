@@ -1,13 +1,12 @@
 runtimeClusterBomOverrideLandcape:
-  istio-ingressgateway: 
+  istio-ingressgateway:
     defaults:
       env:
-        foo: bar  
-
-tenantBomOverrideLandscape: 
+        foo: bar
+tenantBomOverrideLandscape:
   policyengine:
+    logLevel: DEBUG
     policyengine:
       haMode: true
       image:
-        imageNamespace: 'com.sap.it.img.dev'
-    logLevel: DEBUG
+        imageNamespace: com.sap.it.img.dev

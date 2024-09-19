@@ -3,13 +3,13 @@ kind: ServiceInstance
 metadata:
   name: lm-pg-instance-eu12
   namespace: ic-controlplane
-status:
-  ready: 'True'
 spec:
   parameters:
-    allow_access: "54.93.114.192,18.199.194.200,18.158.88.195"
+    allow_access: 54.93.114.192,18.199.194.200,18.158.88.195
     memory: 8
-    region: "eu-central-1"
+    region: eu-central-1
     storage: 5
   serviceOfferingName: postgresql-db
   servicePlanName: premium
+status:
+  ready: 'True'

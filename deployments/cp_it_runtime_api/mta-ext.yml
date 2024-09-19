@@ -1,19 +1,18 @@
----
- mta_ext:
+mta_ext:
   modules:
-    - name: it-runtime-api
-      parameters:
-        instances: 1
-        memory: 8GB
+  - name: it-runtime-api
+    parameters:
+      instances: 1
+      memory: 8GB
   resources:
-    - name: it-db-runtime-api
-      type: org.cloudfoundry.managed-service
-      parameters:
-        service: postgresql-db
-        service-plan: shared-postgresql
-        config:
-          dedicated_instance: it-db-common
-        skip-service-updates:
-          plan: true
-          parameters: true
-          tags: true
+  - name: it-db-runtime-api
+    parameters:
+      config:
+        dedicated_instance: it-db-common
+      service: postgresql-db
+      service-plan: shared-postgresql
+      skip-service-updates:
+        parameters: true
+        plan: true
+        tags: true
+    type: org.cloudfoundry.managed-service

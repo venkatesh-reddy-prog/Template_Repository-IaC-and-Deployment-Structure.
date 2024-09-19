@@ -1,8 +1,7 @@
----
 config:
   component:
-    group_id: ""
-    artifact_id: ""
+    artifact_id: ''
     extension: mtar
-    mta_id: ""
-    version: ""
+    group_id: ''
+    mta_id: ''
+    version: ''

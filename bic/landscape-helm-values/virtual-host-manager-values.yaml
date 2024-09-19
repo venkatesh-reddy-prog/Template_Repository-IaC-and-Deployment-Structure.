@@ -1,9 +1,6 @@
-vault:
-  certs:
-    secretName: "vhcertificates"
-
 externalSecret:
   enabled: true
-
-systemId: "it-iac-prov"
-  
+systemId: it-iac-prov
+vault:
+  certs:
+    secretName: vhcertificates

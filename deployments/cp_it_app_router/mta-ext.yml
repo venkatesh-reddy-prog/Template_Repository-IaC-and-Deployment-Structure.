@@ -1,6 +1,5 @@
----
 mta_ext:
   modules:
-    - name: it-app
-      parameters:
-        keep-existing-routes: false
+  - name: it-app
+    parameters:
+      keep-existing-routes: false

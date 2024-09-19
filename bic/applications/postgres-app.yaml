@@ -11,7 +11,7 @@ spec:
   project: default
   sources:
   - path: bic/landscape-manifests
-    repoURL: njdaxbhgxnhx
+    repoURL: iwkjvbkjb
     targetRevision: HEAD
   syncPolicy:
     automated:

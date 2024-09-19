@@ -1,10 +1,9 @@
----
 config:
-  component:
-    group_id: com.sap.it.broker
-    artifact_id: it-broker-rt
-    extension: mtar
-    mta_id: it-broker-rt
-    version: ""
   broker_runtime_org: cpi_acdev003_eu12_org
   broker_runtime_space: prov_eu12_acdev003
+  component:
+    artifact_id: it-broker-rt
+    extension: mtar
+    group_id: com.sap.it.broker
+    mta_id: it-broker-rt
+    version: ''

@@ -3,21 +3,21 @@ kind: Application
 metadata:
   name: cf-eu12-it-iac-prov-root-app
 spec:
+  destination:
+    namespace: sf-2e4ac807-c35b-4604-a175-53c4a37c0177
+    server: wertty
   project: default
   source:
-    repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
-    path: bic
-    targetRevision: HEAD
     kustomize:
       namePrefix: iac-prov-
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: sf-2e4ac807-c35b-4604-a175-53c4a37c0177
+    path: bic
+    repoURL: iwkjvbkjb
+    targetRevision: HEAD
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
+      selfHeal: true
     syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-      - Replace=true
+    - PruneLast=true
+    - CreateNamespace=true
+    - Replace=true

@@ -1,61 +1,61 @@
----
- mta_ext:
+mta_ext:
   modules:
-    - name: it-op-consumer
-      parameters:
-        instances: 1
-      properties:
-        CPI_KAFKA_CONSUMER_COUNT: 20
-        SET_LOGGING_LEVEL: '{com.sap.it.op.srv.web.cf.consumer.KafkaConsumerServlet: INFO, com.sap.it.op.multicloud.utils.kafka.callback.threads.TenantSubscriptionConsumerThread: DEBUG}'
-    - name: it-op-rest
-      parameters:
-        instances: 1
-    - name: it-op-jobs
-      parameters:
-        instances: 1
-    - name: it-op-odata
-      parameters:
-        instances: 1
-    - name: it-op-static
-      parameters:
-        instances: 1
-    - name: it-op-static-b2b
-      parameters:
-        instances: 1
-    - name: it-op-consumer-b2b
-      parameters:
-        instances: 1
-    - name: it-op-b2b-api
-      parameters:
-        instances: 1
-    - name: it-op-consumer-externallogging
-      parameters:
-        instances: 1
-    - name: it-op-consumer-b2b
-      parameters:
-        instances: 1
-    - name: it-op-b2b-api
-      parameters:
-        instances: 1
-    - name: it-op-jobs-archiving
-      parameters:
-        instances: 1
-    - name: it-op-odata-batch-router
-      parameters:
-        instances: 1
-    - name: it-op-static-b2b
-      parameters:
-        instances: 1
+  - name: it-op-consumer
+    parameters:
+      instances: 1
+    properties:
+      CPI_KAFKA_CONSUMER_COUNT: 20
+      SET_LOGGING_LEVEL: '{com.sap.it.op.srv.web.cf.consumer.KafkaConsumerServlet:
+        INFO, com.sap.it.op.multicloud.utils.kafka.callback.threads.TenantSubscriptionConsumerThread:
+        DEBUG}'
+  - name: it-op-rest
+    parameters:
+      instances: 1
+  - name: it-op-jobs
+    parameters:
+      instances: 1
+  - name: it-op-odata
+    parameters:
+      instances: 1
+  - name: it-op-static
+    parameters:
+      instances: 1
+  - name: it-op-static-b2b
+    parameters:
+      instances: 1
+  - name: it-op-consumer-b2b
+    parameters:
+      instances: 1
+  - name: it-op-b2b-api
+    parameters:
+      instances: 1
+  - name: it-op-consumer-externallogging
+    parameters:
+      instances: 1
+  - name: it-op-consumer-b2b
+    parameters:
+      instances: 1
+  - name: it-op-b2b-api
+    parameters:
+      instances: 1
+  - name: it-op-jobs-archiving
+    parameters:
+      instances: 1
+  - name: it-op-odata-batch-router
+    parameters:
+      instances: 1
+  - name: it-op-static-b2b
+    parameters:
+      instances: 1
   resources:
-    - name: it-db-ops
-      type: org.cloudfoundry.managed-service
-      parameters:
-        service: postgresql-db
-        service-plan: shared-postgresql
-        config:
-          dedicated_instance: it-db-common
-        skip-service-updates:
-          plan: true
-          parameters: true
-          tags: true
-
+  - name: it-db-ops
+    parameters:
+      config:
+        dedicated_instance: it-db-common
+      service: postgresql-db
+      service-plan: shared-postgresql
+      skip-service-updates:
+        parameters: true
+        plan: true
+        tags: true
+    type: org.cloudfoundry.managed-service

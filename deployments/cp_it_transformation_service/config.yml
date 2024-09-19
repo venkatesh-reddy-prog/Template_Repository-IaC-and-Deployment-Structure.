@@ -1,5 +1,4 @@
----
 config:
   component:
-    version: ""
-    loglevel: ""
+    loglevel: ''
+    version: ''

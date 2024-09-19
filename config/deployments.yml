@@ -1,80 +1,79 @@
----
 deployments:
-  - instance: cp_it_app_router
-    definition: cp_it_app_router
-    product: product-cf-cpi
-  - instance: cp_it_broker
-    definition: cp_it_broker
-    product: product-cf-cpi
-  - instance: cp_it_broker_runtime
-    definition: cp_it_broker_runtime
-    product: product-cf-cpi
-  - instance: cp_it_content_orchestrator
-    definition: cp_it_content_orchestrator
-    product: product-cf-cpi
-  - instance: cp_it_is_rootweb_app
-    definition: cp_it_is_rootweb_app
-    product: product-cf-cpi
-  - instance: cp_it_design
-    definition: cp_it_design
-    product: product-cf-cpi
-  - instance: cp_it_destination_routes
-    definition: cp_it_destination_routes
-    product: product-cf-cpi
-  - instance: cp_it_external_repositories
-    definition: cp_it_external_repositories
-    product: product-cf-cpi
-  - instance: cp_it_generation_and_build
-    definition: cp_it_generation_and_build
-    product: product-cf-cpi
-  - instance: cp_it_key_management
-    definition: cp_it_key_management
-    product: product-cf-cpi
-  - instance: cp_it_landscape_credstore
-    definition: cp_it_landscape_credstore
-    product: product-cf-cpi
-  - instance: cp_it_operations
-    definition: cp_it_operations
-    product: product-cf-cpi
-  - instance: cp_it_product_version
-    definition: cp_it_product_version
-    product: product-cf-cpi
-  - instance: cp_it_provisioning_app
-    definition: cp_it_provisioning_app
-    product: product-cf-cpi
-  - instance: cp_it_rootweb_app
-    definition: cp_it_rootweb_app
-    product: product-cf-cpi
-  - instance: cp_it_runtime_api
-    definition: cp_it_runtime_api
-    product: product-cf-cpi
-  - instance: cp_it_runtime_node
-    definition: cp_it_runtime_node
-    product: product-cf-cpi
-  - instance: cp_it_space_setup
-    definition: cp_it_space_setup
-    product: product-cf-cpi
-  - instance: cp_it_telemetry_service
-    definition: cp_it_telemetry_service
-    product: product-cf-cpi
-  - instance: cp_it_tenant_resource_manager
-    definition: cp_it_tenant_resource_manager
-    product: product-cf-cpi
-  - instance: cp_it_tpm_service
-    definition: cp_it_tpm_service
-    product: product-cf-cpi
-  - instance: cp_it_resource_cockpit
-    definition: cp_it_resource_cockpit
-    product: product-cf-cpi
-  - instance: cp_it_cloud_event_controller
-    definition: cp_it_cloud_event_controller
-    product: product-cf-cpi
-  - instance: cp_it_transformation_service
-    definition: cp_it_transformation_service
-    product: product-cf-cpi
-  - instance: cp_it_trm_broker
-    definition: cp_it_trm_broker
-    product: product-cf-cpi
-  - instance: cp_it_ai_service
-    definition: cp_it_ai_service
-    product: product-cf-cpi
+- definition: cp_it_app_router
+  instance: cp_it_app_router
+  product: product-cf-cpi
+- definition: cp_it_broker
+  instance: cp_it_broker
+  product: product-cf-cpi
+- definition: cp_it_broker_runtime
+  instance: cp_it_broker_runtime
+  product: product-cf-cpi
+- definition: cp_it_content_orchestrator
+  instance: cp_it_content_orchestrator
+  product: product-cf-cpi
+- definition: cp_it_is_rootweb_app
+  instance: cp_it_is_rootweb_app
+  product: product-cf-cpi
+- definition: cp_it_design
+  instance: cp_it_design
+  product: product-cf-cpi
+- definition: cp_it_destination_routes
+  instance: cp_it_destination_routes
+  product: product-cf-cpi
+- definition: cp_it_external_repositories
+  instance: cp_it_external_repositories
+  product: product-cf-cpi
+- definition: cp_it_generation_and_build
+  instance: cp_it_generation_and_build
+  product: product-cf-cpi
+- definition: cp_it_key_management
+  instance: cp_it_key_management
+  product: product-cf-cpi
+- definition: cp_it_landscape_credstore
+  instance: cp_it_landscape_credstore
+  product: product-cf-cpi
+- definition: cp_it_operations
+  instance: cp_it_operations
+  product: product-cf-cpi
+- definition: cp_it_product_version
+  instance: cp_it_product_version
+  product: product-cf-cpi
+- definition: cp_it_provisioning_app
+  instance: cp_it_provisioning_app
+  product: product-cf-cpi
+- definition: cp_it_rootweb_app
+  instance: cp_it_rootweb_app
+  product: product-cf-cpi
+- definition: cp_it_runtime_api
+  instance: cp_it_runtime_api
+  product: product-cf-cpi
+- definition: cp_it_runtime_node
+  instance: cp_it_runtime_node
+  product: product-cf-cpi
+- definition: cp_it_space_setup
+  instance: cp_it_space_setup
+  product: product-cf-cpi
+- definition: cp_it_telemetry_service
+  instance: cp_it_telemetry_service
+  product: product-cf-cpi
+- definition: cp_it_tenant_resource_manager
+  instance: cp_it_tenant_resource_manager
+  product: product-cf-cpi
+- definition: cp_it_tpm_service
+  instance: cp_it_tpm_service
+  product: product-cf-cpi
+- definition: cp_it_resource_cockpit
+  instance: cp_it_resource_cockpit
+  product: product-cf-cpi
+- definition: cp_it_cloud_event_controller
+  instance: cp_it_cloud_event_controller
+  product: product-cf-cpi
+- definition: cp_it_transformation_service
+  instance: cp_it_transformation_service
+  product: product-cf-cpi
+- definition: cp_it_trm_broker
+  instance: cp_it_trm_broker
+  product: product-cf-cpi
+- definition: cp_it_ai_service
+  instance: cp_it_ai_service
+  product: product-cf-cpi

@@ -1,37 +1,34 @@
 clm:
   gardenerProject:
-    namespace: "garden-bic-dev"
-  itSystemID: "it-iac-prov"
-  iaasSecretName: "bicdev-aws-secret"
-  kafkaVPCIPCIDRBlock: "10.254.0.0/16" #the Kafka cluster's VPC Peering connection CIDR block, default is 10.254.0.0/16, can be different in few cases.
+    namespace: garden-bic-dev
+  iaasSecretName: bicdev-aws-secret
+  itSystemID: it-iac-prov
+  kafkaVPCIPCIDRBlock: 10.254.0.0/16
   shoot:
-    maxTenantCapInCluster: "40"
-    region: "eu-central-1"
-    iaasProvider: "aws"
-    k8sVersion: "1.30.1"
     emailNotificationReceivers:
-      - "nithin.n.k@sap.com"
-      - "dhruv.agarwal01@sap.com"
+    - nithin.n.k@sap.com
+    - dhruv.agarwal01@sap.com
+    iaasProvider: aws
+    k8sVersion: 1.30.1
+    maxTenantCapInCluster: '40'
     networks:
       vpcs:
-        - id: "vpc-01550fe85b024c747"
-          cidr: "10.182.0.0/16"
+      - cidr: 10.182.0.0/16
+        id: vpc-01550fe85b024c747
+    region: eu-central-1
     workers:
-      - name: rt-worker
-        machineType: m5.xlarge
-        gardenLinuxVersion: 1443.9.0
-
+    - gardenLinuxVersion: 1443.9.0
+      machineType: m5.xlarge
+      name: rt-worker
+image:
+  imageName: ic-lifecycle-manager
+  imageNamespace: com.sap.it.img.dev
+  pullPolicy: Always
+  tag: iac.latest
 postgres:
-  parentInstanceName: "lm-pg-instance-eu12"
-  
+  parentInstanceName: lm-pg-instance-eu12
 vault:
   certs:
-    secretName: "vhcertificates"
+    secretName: vhcertificates
   secretStoreRef:
-    name: "vault-backend"
-
-image:
-  pullPolicy: "Always"
-  imageNamespace: "com.sap.it.img.dev"
-  imageName: "ic-lifecycle-manager"
-  tag: "iac.latest"
+    name: vault-backend

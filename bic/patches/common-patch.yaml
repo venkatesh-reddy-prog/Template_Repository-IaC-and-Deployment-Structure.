@@ -4,15 +4,15 @@ metadata:
   name: ignored
 spec:
   destination:
-    server: 'https://api.eu12-iac-prov.bic-dev.shoot.canary.k8s-hana.ondemand.com'
+    server: wertty
   syncPolicy:
     automated:
-      selfHeal: true
       prune: true
-    syncOptions:
-      - PruneLast=true
-      - CreateNamespace=true
-      - Replace=true
+      selfHeal: true
     managedNamespaceMetadata:
       labels:
-        istio-injection: enabled 
+        istio-injection: enabled
+    syncOptions:
+    - PruneLast=true
+    - CreateNamespace=true
+    - Replace=true

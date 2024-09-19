@@ -1,8 +1,7 @@
----
 config:
   landscape_credstore:
+    name: it-landscape-credstore
     service: credstore
     service_plan: large
-    name: it-landscape-credstore
-  landscape_credstore_org: ""
-  landscape_credstore_space: ""
+  landscape_credstore_org: ''
+  landscape_credstore_space: ''

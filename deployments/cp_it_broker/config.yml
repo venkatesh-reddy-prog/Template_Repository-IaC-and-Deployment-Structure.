@@ -14,12 +14,12 @@ config:
     broker_url: https://it-iac-prov-broker.cert.cfapps.eu12.hana.ondemand.com
   dsi_broker:
     broker_url: ''
+  eventmesh_broker:
+    broker_url: ''
   graph_broker:
     broker_url: null
   ia_broker:
     broker_url: null
-  eventmesh_broker:
-      broker_url: ''
   services:
     apim_service:
       name: apim-service-broker

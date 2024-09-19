@@ -1,18 +1,18 @@
 kind: Application
 metadata:
   name: istio-gateway-app
-spec: 
+spec:
   sources:
-    - repoURL: https://common.repositories.cloud.sap/artifactory/istio-release-remote/charts/
-      targetRevision: 1.22.1
-      chart: gateway
-      helm:
-        valueFiles:
-          - $prod-values/charts/istio/gateway-values.yaml
-          - $landscape-values/bic/landscape-helm-values/gateway-values.yaml
-    - repoURL: https://github.tools.sap/BIC/bic-product-dev.git
-      targetRevision: HEAD
-      ref: prod-values  
-    - repoURL: https://github.tools.sap/BIC/cf-eu12-it-iac-prov.git
-      targetRevision: HEAD
-      ref: landscape-values   
+  - chart: gateway
+    helm:
+      valueFiles:
+      - $prod-values/charts/istio/gateway-values.yaml
+      - $landscape-values/bic/landscape-helm-values/gateway-values.yaml
+    repoURL: https://common.repositories.cloud.sap/artifactory/istio-release-remote/charts/
+    targetRevision: 1.22.1
+  - ref: prod-values
+    repoURL: https://github.tools.sap/BIC/bic-product-dev.git
+    targetRevision: HEAD
+  - ref: landscape-values
+    repoURL: iwkjvbkjb
+    targetRevision: HEAD
