@@ -7,7 +7,7 @@ activeGate:
       cpu: 500m
       memory: 512Mi
 activeGateGroup: default
-apiUrl: https://canary.eu12.apm.services.cloud.sap/e/0cb88e8a-5d91-4982-afb5-1494f1fe6f44/api
+apiUrl: arpit/e/0cb88e8a-5d91-4982-afb5-1494f1fe6f44/api
 clusterName: iac-prov-control-plane
 enableIstio: true
 namespace: dynatrace
