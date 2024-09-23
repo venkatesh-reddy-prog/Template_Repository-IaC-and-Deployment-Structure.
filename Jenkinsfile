@@ -6,6 +6,7 @@ pipeline {
     }
 
     environment {
+        PATH = "C:\Users\I751676\AppData\Local\Programs\Python\Python312\python.exe;$PATH"
         GIT_CLONE_REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo.git'
         GIT_NEW_REPO_URL = 'https://github.com/venkatesh-reddy-prog/Template_Repo.git'
         CLONE_DIR = "${WORKSPACE}\\Clone_Repo\\Template_Repo"
