@@ -15,36 +15,27 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    // Clone the repository
-                    if (fileExists(env.CLONE_DIR)) {
-                        echo "Repository already cloned, skipping clone."
-                    } else {
-                        echo "Cloning repository..."
-                        bat """
-                            mkdir ${WORKSPACE}\\Clone_Repo
-                            python clone_repo.py
-                        """
-                    }
-                }
-            }
-        }
-
-        stage('Update YAML Files') {
-            environment {
-                updates = "${params.UPDATES}"  // Use the parameter for YAML modification
-            }
-            steps {
-                script {
-                    echo "Updating YAML files with environment variables: ${params.UPDATES}"
+                    echo "Cloning repository..."
                     bat """
-                        set updates=${params.UPDATES}
-                        python update_yaml.py
+                        if not exist ${WORKSPACE}\\Clone_Repo mkdir ${WORKSPACE}\\Clone_Repo
+                        python clone_repo.py
                     """
                 }
             }
         }
 
-        stage('Push Changes to New Repo') {
+        stage('Update YAML Files') {
+            steps {
+                script {
+                    echo "Updating YAML files with environment variables: ${params.UPDATES}"
+                    bat """
+                        set updates=${params.UPDATES} && python update_yaml.py
+                    """
+                }
+            }
+        }
+
+        stage('Push Changes to Repo') {
             steps {
                 script {
                     echo "Pushing changes to new repository..."
