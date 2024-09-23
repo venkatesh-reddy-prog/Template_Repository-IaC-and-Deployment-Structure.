@@ -18,7 +18,6 @@ pipeline {
                 script {
                     echo "Cloning repository..."
                     bat """
-                        if not exist ${WORKSPACE}\\Clone_Repo mkdir ${WORKSPACE}\\Clone_Repo
                         python clone_repo.py
                     """
                 }
