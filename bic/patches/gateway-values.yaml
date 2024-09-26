@@ -14,5 +14,5 @@ spec:
     repoURL: https://github.tools.sap/BIC/bic-product-dev.git
     targetRevision: HEAD
   - ref: landscape-values
-    repoURL: iwkjvbkjb
+    repoURL: Modify
     targetRevision: HEAD

@@ -4,7 +4,7 @@ metadata:
   name: ignored
 spec:
   destination:
-    server: wertty
+    server: Modify
   syncPolicy:
     automated:
       prune: true
